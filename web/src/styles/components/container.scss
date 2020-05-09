@@ -1,0 +1,10 @@
+.root-container {
+  box-sizing: border-box;
+  max-width: 960px;
+  padding: 1.5em;
+  margin: 0 auto;
+
+  @include media-min-small {
+    padding: 2em;
+  }
+}

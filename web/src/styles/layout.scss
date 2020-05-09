@@ -1,0 +1,35 @@
+@import "./_variables.scss";
+@import "./_mixins.scss";
+
+@import "./components/header.scss";
+@import "./components/layout.scss";
+@import "./components/container.scss";
+@import "./components/blog-post.scss";
+@import "./components/blog-post-preview.scss";
+@import "./components/blog-post-preview-list.scss";
+@import "./components/blog-post-preview-grid.scss";
+@import "./components/author-list.scss";
+
+html {
+  font-family: $font-family-sans;
+  font-size: $font-base-size;
+  line-height: $font-base-line-height;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  background: $color-white;
+  color: $color-black;
+  margin: 0;
+}
+
+html,
+body,
+body > div,
+body > div > div {
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+}
