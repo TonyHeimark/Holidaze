@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "Holidaze-web",
+  "name": "holidaze-web",
   "version": "1.0.0",
   "author": "Sanity <hello@sanity.io>",
   "scripts": {
