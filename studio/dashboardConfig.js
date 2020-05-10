@@ -12,16 +12,10 @@ export default {
                 'NOTE: Because these sites are static builds, they need to be re-deployed to see the changes when documents are published.',
               sites: [
                 {
-                  buildHookId: '5e16137f51d613f5a9075bf6',
-                  title: 'Sanity Studio',
-                  name: 'Holidaze-studio',
-                  apiId: '172b2bfd-02f9-498c-8b9b-4f773a142913'
-                },
-                {
-                  buildHookId: '5e16137f51b7d7a9c5a64e9f',
-                  title: 'Blog Website',
+                  buildHookId: '5eb74abac2f2d257dc28739a',
+                  title: 'Holidaze',
                   name: 'Holidaze',
-                  apiId: 'b89259eb-24f8-4713-9f27-923b0c01868c'
+                  apiId: '3a8b2c61-cef6-45eb-8cff-3b774dd0da04'
                 }
               ]
             }
