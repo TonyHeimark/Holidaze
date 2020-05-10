@@ -70,7 +70,7 @@ const IndexPage = props => {
     );
   }
 
-  handleFormSubmit = event => {
+  const handleFormSubmit = event => {
     // const { isFormValid } = this.state;
     event.preventDefault();
 
