@@ -7,10 +7,6 @@ import schemaTypes from 'all:part:@sanity/base/schema-type'
 // document schemas
 import author from './documents/author'
 import category from './documents/category'
-import post from './documents/post'
-import coach from './documents/coaches'
-import programs from './documents/programs'
-import sale from './documents/sale'
 import siteSettings from './documents/siteSettings'
 
 // Object types
@@ -30,11 +26,7 @@ export default createSchema({
     // The following are document types which will appear
     // in the studio.
     siteSettings,
-    post,
-    sale,
     category,
-    programs,
-    coach,
     author,
     mainImage,
     authorReference,

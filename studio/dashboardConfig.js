@@ -32,8 +32,8 @@ export default {
             title: 'GitHub repo',
             value: 'https://github.com/TonyHeimark/Holidaze',
             category: 'Code'
-          },
-          { title: 'Frontend', value: 'https://holidaze.netlify.com', category: 'apps' }
+          }
+          // { title: 'Frontend', value: 'https://holidaze.netlify.com', category: 'apps' }
         ]
       }
     },

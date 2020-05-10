@@ -1,11 +1,11 @@
 {
   "root": true,
+  "api": {
+    "projectId": "yrla19ue",
+    "dataset": "production"
+  },
   "project": {
     "name": "Holidaze"
-  },
-  "api": {
-    "projectId": "fmz0q3xc",
-    "dataset": "production"
   },
   "plugins": [
     "@sanity/base",

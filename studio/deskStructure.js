@@ -18,10 +18,7 @@ export default () =>
             .schemaType('siteSettings')
             .documentId('siteSettings')
         ),
-      S.listItem()
-        .title('Blogg innlegg')
-        .schemaType('post')
-        .child(S.documentTypeList('post').title('Blogg innlegg')),
+
       S.listItem()
         .title('Personer')
         .icon(MdPerson)
