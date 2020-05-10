@@ -11,6 +11,9 @@ import GraphQLErrorList from "../components/graphql-error-list";
 import SEO from "../components/seo";
 import Layout from "../containers/layout";
 
+const EVENT_SIGNUP_URL = "hey";
+// process.env.GATSBY_ENQUIRIE_URL;
+
 export const query = graphql`
   fragment SanityImage on SanityMainImage {
     crop {
@@ -67,18 +70,53 @@ const IndexPage = props => {
     );
   }
 
+  handleFormSubmit = event => {
+    // const { isFormValid } = this.state;
+    event.preventDefault();
+
+    if (true) {
+      this.setState({ submitting: true });
+      const sendData = this.createSendableObject();
+
+      fetch(EVENT_SIGNUP_URL, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(sendData)
+      })
+        .then(response => response.json())
+        .then(data => {
+          this.setState({
+            formIsSubmitted: true,
+            formSubmittedSuccessfully: data.success,
+            submitting: false,
+            errorMsg:
+              !data.success && data.data.error ? (
+                <span>
+                  Noe gikk galt - vi beklager :/ <br />
+                  <small>{data.data.error.message}</small>
+                </span>
+              ) : (
+                ""
+              )
+          });
+        })
+        .catch(errorData => {
+          this.setState({
+            errorMsg: `Noe gikk galt - vi beklager \r\n${errorData}`,
+            submitting: false
+          });
+        });
+    }
+    // }
+  };
+
   return (
     <Layout>
       <SEO title={site.title} description={site.description} keywords={site.keywords} />
       <Container>
         <h1>Velkommen til {site.title}</h1>
-        {postNodes && (
-          <BlogPostPreviewList
-            title="Siste blogg innlegg"
-            nodes={postNodes}
-            browseMoreHref="/blog/"
-          />
-        )}
       </Container>
     </Layout>
   );

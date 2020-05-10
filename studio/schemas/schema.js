@@ -7,6 +7,7 @@ import schemaTypes from "all:part:@sanity/base/schema-type";
 // Documents schemas
 import siteSettings from "./documents/siteSettings";
 import author from "./documents/author";
+import enquiries from "./documents/enquiries";
 
 // Object types
 import bodyPortableText from "./objects/bodyPortableText";
@@ -25,6 +26,7 @@ export default createSchema({
     /* Your types here! */
     siteSettings,
     author,
+    enquiries,
     mainImage,
     authorReference,
     bodyPortableText,
