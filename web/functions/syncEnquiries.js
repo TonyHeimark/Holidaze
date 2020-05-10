@@ -1,4 +1,9 @@
-console.log("Server is uuup!!");
+exports.handler = async (event, context) => {
+  return {
+    statusCode: 200,
+    body: "Hello, World"
+  };
+};
 /*
 
 
