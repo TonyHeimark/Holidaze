@@ -1,0 +1,64 @@
+// Overwriting some of react-datepickers default css
+.react-datepicker-wrapper {
+  background: none;
+}
+
+.react-datepicker {
+  font-family: $font-family-sans !important;
+  border: none !important;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15) !important;
+}
+
+.react-datepicker__triangle {
+  border: none !important;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range,
+.react-datepicker__month-text--selected,
+.react-datepicker__month-text--in-selecting-range,
+.react-datepicker__month-text--in-range,
+.react-datepicker__quarter-text--selected,
+.react-datepicker__quarter-text--in-selecting-range,
+.react-datepicker__quarter-text--in-range {
+  background-color: $color-primary-green !important;
+}
+
+.react-datepicker__day--keyboard-selected,
+.react-datepicker__month-text--keyboard-selected,
+.react-datepicker__quarter-text--keyboard-selected {
+  background-color: $color-primary-green !important;
+}
+
+.react-datepicker__input-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  input {
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: #393939;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    -webkit-appearance: textfield;
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    border: none;
+    font-size: 16px;
+    font-family: $montserrat;
+    font-weight: 600;
+    max-width: 120px;
+    margin-top: 5px;
+    padding: 10px 0;
+    &:focus {
+      outline: none;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+.browse {
+  &__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-height: 100vh;
+  }
+
+  &__filters {
+    padding-right: 75px;
+    border-right: 1px solid #70707031;
+  }
+
+  &__listings {
+    max-width: 750px;
+  }
+}

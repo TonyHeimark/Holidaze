@@ -4,53 +4,41 @@
  *
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
-/*
 
-const {format} = require('date-fns')
-
-async function createBlogPostPages (graphql, actions, reporter) {
-  const {createPage} = actions
+const createEstablishmentPages = async (graphql, actions, reporter) => {
+  const { createPage } = actions;
   const result = await graphql(`
     {
-      allSanityPost(
-        filter: { slug: { current: { ne: null } }, publishedAt: { ne: null } }
-      ) {
+      allSanityEstablishments {
         edges {
           node {
             id
-            publishedAt
-            slug {
-              current
-            }
+            title
           }
         }
       }
     }
-  `)
+  `);
 
-  if (result.errors) throw result.errors
+  if (result.errors) throw result.errors;
 
-  const postEdges = (result.data.allSanityPost || {}).edges || []
+  const edges = (result.data.allSanityEstablishments || {}).edges || [];
 
-  postEdges
-    .filter(edge => !isFuture(edge.node.publishedAt))
-    .forEach((edge, index) => {
-      const {id, slug = {}, publishedAt} = edge.node
-      const dateSegment = format(publishedAt, 'YYYY/MM')
-      const path = `/blog/${dateSegment}/${slug.current}/`
+  edges.forEach((edge, index) => {
+    const { id, title } = edge.node;
+    const slug = `${title}/${id}`;
+    const path = `/browse/${slug}/`;
 
-      reporter.info(`Creating blog post page: ${path}`)
+    reporter.info(`Creating establishment page: ${path}`);
 
-      createPage({
-        path,
-        component: require.resolve('./src/templates/blog-post.js'),
-        context: {id}
-      })
-    })
-}
+    createPage({
+      path,
+      component: require.resolve("./src/templates/establishmentTemplate.js"),
+      context: { id }
+    });
+  });
+};
 
-exports.createPages = async ({graphql, actions, reporter}) => {
-  await createBlogPostPages(graphql, actions, reporter)
-}
-
-*/
+exports.createPages = async ({ graphql, actions, reporter }) => {
+  await createEstablishmentPages(graphql, actions, reporter);
+};

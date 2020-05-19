@@ -5,10 +5,17 @@
 @import "./components/layout.scss";
 @import "./components/container.scss";
 @import "./components/blog-post.scss";
-@import "./components/blog-post-preview.scss";
-@import "./components/blog-post-preview-list.scss";
-@import "./components/blog-post-preview-grid.scss";
 @import "./components/author-list.scss";
+
+@import "./components/bits/filters.scss";
+@import "./components/bits/datePicker.scss";
+@import "./components/bits/dateField.scss";
+@import "./components/bits/initialFilter.scss";
+@import "./components/bits/establishmentListing.scss";
+@import "./components/bits/inputRange.scss";
+
+@import "./pages/index.scss";
+@import "./pages/browse.scss";
 
 html {
   font-family: $font-family-sans;
@@ -19,7 +26,7 @@ html {
 body {
   -webkit-font-smoothing: antialiased;
   background: $color-white;
-  color: $color-black;
+  color: $color-dark-gray;
   margin: 0;
 }
 
@@ -32,4 +39,34 @@ body > div > div {
 
 a {
   text-decoration: none;
+  font-family: $montserrat;
+}
+
+button {
+  font-family: $font-family-sans;
+  font-weight: bold;
+}
+
+label {
+  font-family: $font-family-sans;
+  text-transform: uppercase;
+  font-size: 16px;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-family-sans;
+}
+
+p,
+input,
+textarea {
+  font-family: $montserrat;
+  font-weight: 400;
 }

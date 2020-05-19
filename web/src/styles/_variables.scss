@@ -1,7 +1,12 @@
-$font-family-sans: "apple-system", BlinkMacSystemFont, sans-serif;
+@import url("https://fonts.googleapis.com/css?family=Nunito&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;600;800&display=swap");
 
+$font-family-sans: "Nunito", BlinkMacSystemFont, sans-serif;
+$montserrat: "Montserrat", sans-serif;
+
+$color-primary-green: #05a081;
 $color-black: #202123;
-$color-dark-gray: #32373e;
+$color-dark-gray: #393939;
 $color-gray: #697a90;
 $color-light-gray: #b4bcc7;
 $color-very-light-gray: #e7ebed;

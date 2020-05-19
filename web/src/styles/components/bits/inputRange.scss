@@ -1,0 +1,96 @@
+.input-range {
+  height: 1rem;
+  position: relative;
+  width: calc(100% - 50px);
+  margin-top: 25px;
+  margin-left: 5px;
+
+  &__label {
+    color: #aaaaaa;
+    font-size: 1.1rem;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    white-space: nowrap;
+    font-family: $font-family-sans;
+
+    &--min {
+      left: 0;
+      bottom: -1.4rem;
+      position: absolute;
+      display: none;
+    }
+
+    &--max {
+      display: none;
+      bottom: -1.4rem;
+      position: absolute;
+      right: 0;
+      .input-rage__label-container {
+        left: -50%;
+      }
+    }
+
+    &--value {
+      position: absolute;
+      top: -35px;
+      color: #393939;
+      font-weight: 600;
+      left: -20px;
+    }
+
+    .input-rage__label-container {
+      left: -50%;
+    }
+  }
+
+  &__slider {
+    background: $color-primary-green;
+    border: 2px solid white;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 100%;
+    cursor: pointer;
+    display: block;
+    height: 1rem;
+    margin-left: -0.5rem;
+    margin-top: -0.73rem;
+    outline: none;
+    position: absolute;
+    top: 50%;
+    -webkit-transition: box-shadow 0.3s ease-out, -webkit-transform 0.3s ease-out;
+    transition: box-shadow 0.3s ease-out, -webkit-transform 0.3s ease-out;
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, -webkit-transform 0.3s ease-out;
+    width: 1rem;
+
+    &:focus {
+      transform: scale(1.2);
+      transition: 0.3s;
+    }
+  }
+
+  &__track {
+    background: #eeeeee;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    display: block;
+    height: 0.3rem;
+    position: relative;
+    -webkit-transition: left 0.3s ease-out, width 0.3s ease-out;
+    transition: left 0.3s ease-out, width 0.3s ease-out;
+
+    &--active {
+      background: $color-primary-green;
+    }
+
+    .input-range__slider-container {
+      &:first-of-type {
+        .input-range__label--value {
+          top: 10px;
+          left: -3px;
+        }
+      }
+    }
+  }
+}
