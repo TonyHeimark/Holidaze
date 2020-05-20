@@ -31,7 +31,7 @@ const SignInForm = ({
       <input
         className="signin-form__input"
         name="password"
-        type="text"
+        type="password"
         value={password}
         onChange={e => {
           setPassword(e.target.value);

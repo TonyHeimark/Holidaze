@@ -22,7 +22,7 @@ const SignUpForm = ({ setUserName, setPassword, setConfirmPassword, handleSignUp
         className="signup-form__input"
         name="password"
         maxlength="12"
-        type="text"
+        type="password"
         onChange={e => {
           setPassword(e.target.value);
         }}
@@ -34,7 +34,7 @@ const SignUpForm = ({ setUserName, setPassword, setConfirmPassword, handleSignUp
         className="signup-form__input"
         name="confirm"
         maxlength="12"
-        type="text"
+        type="password"
         onChange={e => {
           setConfirmPassword(e.target.value);
         }}

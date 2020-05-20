@@ -1,56 +1,58 @@
-import React, { useState } from "react";
-//import auth from "../lib/auth";
-import Layout from "../components/layout";
-import SEO from "../components/seo";
+import React, { useEffect, useState } from "react";
+import { navigate } from "gatsby";
+import { handleLogin } from "../lib/auth";
+import { useSelector, useDispatch } from "react-redux";
+import { setIsLoggedIn } from "../state/loggedIn";
+import SignInForm from "../components/forms/signInForm";
 
-import GoTrue from "gotrue-js";
+import logo from "../assets/logo.svg";
 
-const auth = new GoTrue({
-  APIUrl: "https://holidaze.netlify.app/.netlify/identity",
-  audience: "",
-  setCookie: true
-});
+const SignInPage = () => {
+  const isLoggedIn = useSelector(state => state.isLoggedIn.isLoggedIn);
+  const dispatch = useDispatch();
+  const [authenticated, setAuthenticated] = useState(null);
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
 
-const SignIn = () => {
-  const [emailInput, setEmailInput] = useState("");
-  const [passwordInput, setPasswordInput] = useState("");
-
-  const handleSignUp = e => {
-    e.preventDefault();
-    auth
-      .signup(emailInput, passwordInput)
-      .then(response => console.log("Confirmation email sent", response))
-      .catch(error => console.log("It's an error", error));
+  const handleSignIn = () => {
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    if (
+      users.some(user => {
+        return user.username === userName && user.password === password;
+      })
+    ) {
+      setAuthenticated(true);
+      dispatch(setIsLoggedIn(true));
+      handleLogin(true);
+      navigate("/");
+    } else {
+      setAuthenticated(false);
+      setUserName("");
+      setPassword("");
+    }
   };
 
-  const handleSignIn = e => {
-    e.preventDefault();
-    auth
-      .login(emailInput, passwordInput)
-      .then(response => console.log("Success", response))
-      .catch(error => console.log("Failed", error));
-  };
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, []);
 
   return (
-    <Layout>
-      <SEO title="sign in" />
-      <form onSubmit={handleSignIn}>
-        <input
-          type="email"
-          name="email"
-          value={emailInput}
-          onChange={e => setEmailInput(e.target.value)}
+    <div className="sign-in">
+      <div className="sign-in__wrapper">
+        <img className="sign-in__brand-img" src={logo} />
+        <SignInForm
+          password={password}
+          userName={userName}
+          setUserName={setUserName}
+          setPassword={setPassword}
+          handleSignIn={handleSignIn}
+          authenticated={authenticated}
         />
-        <input
-          type="password"
-          name="password"
-          value={passwordInput}
-          onChange={e => setPasswordInput(e.target.value)}
-        />
-        <button type="submit">Send</button>
-      </form>
-    </Layout>
+      </div>
+    </div>
   );
 };
 
-export default SignIn;
+export default SignInPage;

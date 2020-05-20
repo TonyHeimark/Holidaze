@@ -1,5 +1,7 @@
+import { isLoggedIn } from "../lib/auth";
+
 const initialState = {
-  isLoggedIn: false
+  isLoggedIn: isLoggedIn()
 };
 
 // CONSTANTS
