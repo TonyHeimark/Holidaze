@@ -2,12 +2,12 @@ import React from "react";
 
 const SignUpForm = ({ setUserName, setPassword, setConfirmPassword, handleSignUp }) => {
   return (
-    <div className="signup-form">
-      <label for="username" className="signup-form__label">
+    <div className="signin-form">
+      <label for="username" className="signin-form__label">
         Username
       </label>
       <input
-        className="signup-form__input"
+        className="signin-form__input"
         name="username"
         type="text"
         maxlength="12"
@@ -15,11 +15,11 @@ const SignUpForm = ({ setUserName, setPassword, setConfirmPassword, handleSignUp
           setUserName(e.target.value);
         }}
       />
-      <label for="password" className="signup-form__label">
+      <label for="password" className="signin-form__label">
         Password
       </label>
       <input
-        className="signup-form__input"
+        className="signin-form__input"
         name="password"
         maxlength="12"
         type="password"
@@ -27,11 +27,11 @@ const SignUpForm = ({ setUserName, setPassword, setConfirmPassword, handleSignUp
           setPassword(e.target.value);
         }}
       />
-      <label for="confirm" className="signup-form__label">
+      <label for="confirm" className="signin-form__label">
         Confirm password
       </label>
       <input
-        className="signup-form__input"
+        className="signin-form__input"
         name="confirm"
         maxlength="12"
         type="password"
@@ -39,7 +39,7 @@ const SignUpForm = ({ setUserName, setPassword, setConfirmPassword, handleSignUp
           setConfirmPassword(e.target.value);
         }}
       />
-      <button className="signup-form__button" onClick={handleSignUp}>
+      <button className="signin-form__button" onClick={handleSignUp}>
         <span>Sign Up</span>
       </button>
     </div>
