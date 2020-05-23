@@ -110,6 +110,7 @@ const EnquiriesForm = ({ title, image, availableFrom, availableUntill, price, id
           </label>
           <div className="filters__input filters__input--wrapper" type="text" name="time">
             <DatePicker
+              withPortal
               selected={checkin}
               onChange={e => setCheckin(e)}
               minDate={availableFromDate}
@@ -119,6 +120,7 @@ const EnquiriesForm = ({ title, image, availableFrom, availableUntill, price, id
             <span> | </span>
 
             <DatePicker
+              withPortal
               selected={checkout}
               onChange={e => setCheckout(e)}
               minDate={checkin || availableFromDate}
