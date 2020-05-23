@@ -40,7 +40,7 @@ const SignUpForm = ({ setUserName, setPassword, setConfirmPassword, handleSignUp
         }}
       />
       <button className="signup-form__button" onClick={handleSignUp}>
-        Sign Up
+        <span>Sign Up</span>
       </button>
     </div>
   );

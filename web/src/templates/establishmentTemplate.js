@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { graphql } from "gatsby";
 import Establishment from "../components/establishment";
 import SEO from "../components/seo";
@@ -15,10 +15,11 @@ export const query = graphql`
       bedrooms
       beds
       description
+      availableFrom
+      availableUntill
       facilities {
-        title
         _id
-        _key
+        title
       }
       _id
       id
@@ -30,6 +31,9 @@ export const query = graphql`
 `;
 
 const EstablishmentTemplate = ({ data, errors }) => {
+  const [modalShow, setModalShow] = useState(false);
+  const [modalContentComponent, setModalContentComponent] = useState(null);
+
   const establishment = data && data.establishment;
   return (
     <Layout>
@@ -41,8 +45,30 @@ const EstablishmentTemplate = ({ data, errors }) => {
           image={establishment.image}
         />
       )}
+      {modalShow && (
+        <div className="modal">
+          <div className="modal__box">
+            <button
+              className="modal__close-button"
+              onClick={() => {
+                setModalShow(false);
+                setModalContentComponent(null);
+              }}
+            >
+              X
+            </button>
+            <div className="modal__content">{modalContentComponent}</div>
+          </div>
+        </div>
+      )}
 
-      {establishment && <Establishment {...establishment} />}
+      {establishment && (
+        <Establishment
+          setModalContentComponent={setModalContentComponent}
+          setModalShow={setModalShow}
+          {...establishment}
+        />
+      )}
     </Layout>
   );
 };

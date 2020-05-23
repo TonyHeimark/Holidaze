@@ -42,7 +42,12 @@ const ContactForm = () => {
 
   return (
     <form onSubmit={handleFormSubmit}>
+      <label className="read-message__label" htmlFor="name">
+        Name
+      </label>
+
       <input
+        className="filters__input"
         type="text"
         value={inputName}
         name="name"
@@ -50,7 +55,11 @@ const ContactForm = () => {
           setInputName(e.target.value);
         }}
       />
+      <label className="read-message__label" htmlFor="email">
+        Email
+      </label>
       <input
+        className="filters__input"
         type="email"
         value={inputEmail}
         name="email"
@@ -58,7 +67,11 @@ const ContactForm = () => {
           setInputEmail(e.target.value);
         }}
       />
+      <label className="read-message__label" htmlFor="message">
+        Message
+      </label>
       <textarea
+        className="filters__input filters__textarea"
         type="textarea"
         value={inputMessage}
         name="message"
@@ -66,7 +79,9 @@ const ContactForm = () => {
           setInputMessage(e.target.value);
         }}
       />
-      <button type="submit">Send</button>
+      <button className="read-message__button" type="submit">
+        <span>Send</span>
+      </button>
     </form>
   );
 };

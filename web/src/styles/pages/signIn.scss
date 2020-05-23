@@ -1,0 +1,19 @@
+.sign-in {
+  &__wrapper {
+    max-width: 400px;
+    width: 92%;
+    padding: 0 4%;
+    margin: 50px auto;
+  }
+
+  &__link-box {
+    margin-top: 50px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__link {
+    margin-top: 20px;
+  }
+}

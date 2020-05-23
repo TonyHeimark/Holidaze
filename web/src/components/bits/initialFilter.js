@@ -45,7 +45,7 @@ const InitialFilter = () => {
         >
           <DatePicker
             selected={filters.checkin}
-            placeholderText="dd/mm/yyyy"
+            placeholderText="mm/dd/yyyy"
             onChange={e => dispatch(setCheckin(e))}
             maxDate={filters.checkout}
             minDate={today}
@@ -55,7 +55,7 @@ const InitialFilter = () => {
 
           <DatePicker
             selected={filters.checkout}
-            placeholderText="dd/mm/yyyy"
+            placeholderText="mm/dd/yyyy"
             onChange={e => dispatch(setCheckout(e))}
             minDate={filters.checkin || today}
           />

@@ -20,6 +20,8 @@ export const query = graphql`
           bedrooms
           beds
           description
+          availableFrom
+          availableUntill
           facilities {
             title
             _id
@@ -57,7 +59,6 @@ const Browse = ({ data }) => {
         return;
       }
     });
-    console.log(filteredListings);
     setListingsToShow(filteredListings);
   }, [filters]);
 
@@ -73,7 +74,7 @@ const Browse = ({ data }) => {
             <div className="browse__listings">
               {listingsToShow &&
                 listingsToShow.map(listing => (
-                  <EstablishmentListing key={listing.node._key} listing={listing.node} />
+                  <EstablishmentListing key={listing.node._id} listing={listing.node} />
                 ))}
             </div>
           </div>

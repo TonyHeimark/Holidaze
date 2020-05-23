@@ -18,26 +18,20 @@ export default {
       type: "string",
       title: "Phone"
     },
-
     {
       name: "check_in",
-      type: "string",
+      type: "date",
       title: "Check in"
     },
     {
       name: "check_out",
-      type: "string",
+      type: "date",
       title: "Check out"
     },
     {
       name: "guests",
       type: "string",
       title: "Guests"
-    },
-    {
-      name: "message",
-      type: "text",
-      title: "message"
     }
   ]
 };

@@ -1,23 +1,26 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
+import { buildImageObj } from "../../lib/helpers";
+import { imageUrlFor } from "../../lib/image-url";
 
-const CreateEstablishmentForm = ({ setModalShow, facilities }) => {
+const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
+  console.log(listingToEdit);
   const [today, setToday] = useState(new Date());
-  const [inputTitle, setInputTitle] = useState("");
-  const [inputType, setInputType] = useState("");
-  const [inputPrice, setInputPrice] = useState("");
-  const [inputBedrooms, setInputBedrooms] = useState("");
-  const [inputBeds, setInputBeds] = useState("");
-  const [inputGuests, setInputGuests] = useState("");
-  const [inputLatitude, setInputLatitude] = useState("");
-  const [availableFrom, setAvailableFrom] = useState(new Date());
-  const [availableUntill, setAvailableUntill] = useState(null);
-  const [inputLongitude, setInputLongitude] = useState("");
-  const [inputRating, setInputRating] = useState("");
-  const [inputImage, setInputImage] = useState(null);
-  const [inputFacilities, setInputFacilities] = useState([]);
-  const [facilityKeys, setFacilityKeys] = useState([]);
-  const [inputDescription, setInputDescription] = useState("");
+  const [inputTitle, setInputTitle] = useState(listingToEdit.title);
+  const [inputType, setInputType] = useState(listingToEdit.typeOfEstablishment);
+  const [inputPrice, setInputPrice] = useState(listingToEdit.price);
+  const [inputBedrooms, setInputBedrooms] = useState(listingToEdit.bedrooms);
+  const [inputBeds, setInputBeds] = useState(listingToEdit.beds);
+  const [availableFrom, setAvailableFrom] = useState(new Date(listingToEdit.availableFrom));
+  const [availableUntill, setAvailableUntill] = useState(new Date(listingToEdit.availableUntill));
+  const [inputGuests, setInputGuests] = useState(listingToEdit.maxGuests);
+  const [inputLatitude, setInputLatitude] = useState(listingToEdit.latitude);
+  const [inputLongitude, setInputLongitude] = useState(listingToEdit.longitude);
+  const [inputRating, setInputRating] = useState(listingToEdit.rating);
+  const [inputImage, setInputImage] = useState(listingToEdit._rawImage.asset._ref);
+  const [inputFacilities, setInputFacilities] = useState(listingToEdit.facilities);
+  const [facilityKeys, setFacilityKeys] = useState(listingToEdit.facilities.map(f => f._key));
+  const [inputDescription, setInputDescription] = useState(listingToEdit.description);
   const [fileState, setFileState] = useState("");
   const [dataState, setDataState] = useState("");
 
@@ -58,28 +61,31 @@ const CreateEstablishmentForm = ({ setModalShow, facilities }) => {
   const handleCreateEstablishment = image => {
     const mutations = [
       {
-        create: {
-          _type: "establishments",
-          title: inputTitle,
-          image: {
-            _type: "image",
-            asset: {
-              _ref: image._id
-            }
-          },
-          description: inputDescription,
-          typeOfEstablishment: inputType,
-          availableFrom: availableFrom,
-          availableUntill: availableUntill,
-          price: inputPrice,
-          bedrooms: inputBedrooms,
-          beds: inputBeds,
-          maxGuests: inputGuests,
-          beds: inputBeds,
-          latitude: inputLatitude,
-          longitude: inputLongitude,
-          rating: inputRating,
-          facilities: inputFacilities
+        patch: {
+          id: listingToEdit._id,
+          set: {
+            _type: "establishments",
+            title: inputTitle,
+            image: {
+              _type: "image",
+              asset: {
+                _ref: image._id || image
+              }
+            },
+            description: inputDescription,
+            typeOfEstablishment: inputType,
+            availableFrom: availableFrom,
+            availableUntill: availableUntill,
+            price: inputPrice,
+            bedrooms: inputBedrooms,
+            beds: inputBeds,
+            maxGuests: inputGuests,
+            beds: inputBeds,
+            latitude: inputLatitude,
+            longitude: inputLongitude,
+            rating: inputRating,
+            facilities: inputFacilities
+          }
         }
       }
     ];
@@ -98,7 +104,6 @@ const CreateEstablishmentForm = ({ setModalShow, facilities }) => {
       .then(response => response.json())
       .then(result => {
         console.log(result);
-        setModalShow(false);
       })
       .catch(error => console.error(error));
   };
@@ -140,7 +145,11 @@ const CreateEstablishmentForm = ({ setModalShow, facilities }) => {
     // const { isFormValid } = this.state;
     event.preventDefault();
     // add validation
-    handleUploadAndCreate();
+    if (fileState !== "") {
+      handleUploadAndCreate();
+    } else {
+      handleCreateEstablishment(inputImage);
+    }
   };
 
   return (
@@ -173,7 +182,7 @@ const CreateEstablishmentForm = ({ setModalShow, facilities }) => {
             }}
           />
           <label className="filters__label" htmlFor="time">
-            Check-in / Check-out
+            Available from / to
           </label>
 
           <div className="filters__input filters__input--wrapper" type="text" name="time">
@@ -189,7 +198,7 @@ const CreateEstablishmentForm = ({ setModalShow, facilities }) => {
             <DatePicker
               selected={availableUntill}
               onChange={e => setAvailableUntill(e)}
-              minDate={setAvailableFrom}
+              minDate={availableFrom}
             />
           </div>
           <label className="filters__label" htmlFor="price">
@@ -215,6 +224,18 @@ const CreateEstablishmentForm = ({ setModalShow, facilities }) => {
             accept="image/jpeg, image/jpg, image/png, image/webp"
             onChange={handleFileSelect}
           />
+          <div name="currentImage" className="create-establishment__image">
+            <label className="filters__label" htmlFor="currentImage">
+              Current image
+            </label>
+            <img
+              className="dashboard-listing__image"
+              src={imageUrlFor(buildImageObj(listingToEdit._rawImage))
+                .width(400)
+                .url()}
+              alt="current listing image"
+            />
+          </div>
         </div>
       </div>
 
@@ -339,10 +360,10 @@ const CreateEstablishmentForm = ({ setModalShow, facilities }) => {
           ))}
       </div>
       <button className="create-establishment__button" type="submit">
-        <span>Create</span>
+        <span>Update</span>
       </button>
     </form>
   );
 };
 
-export default CreateEstablishmentForm;
+export default EditEstablishmentForm;

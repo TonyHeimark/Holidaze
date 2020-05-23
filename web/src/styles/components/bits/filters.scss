@@ -5,6 +5,9 @@
   &__label {
     display: block;
     padding: 10px 0;
+    &--green {
+      color: $color-dark-green;
+    }
   }
 
   &__input {
@@ -45,11 +48,18 @@
     }
   }
 
+  &__textarea {
+    min-height: 175px;
+    padding-top: 20px;
+    max-width: 580px;
+  }
+
   &__checkbox {
     margin-bottom: 15px;
   }
 
   &__checkbox-button {
+    display: inline-block;
     background: $color-white;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
     border: none;
@@ -58,6 +68,7 @@
     transition: 0.3s;
     border-radius: 10px;
     margin: 0 15px 15px 0;
+    font-size: 14px;
     font-family: $montserrat;
     font-weight: 600;
     cursor: pointer;

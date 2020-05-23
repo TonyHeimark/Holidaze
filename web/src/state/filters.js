@@ -1,7 +1,7 @@
 const initialState = {
   location: "",
-  checkin: "",
-  checkout: "",
+  checkin: null,
+  checkout: null,
   guests: 1,
   search: "",
   establishmentType: [],

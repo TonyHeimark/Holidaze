@@ -1,0 +1,14 @@
+.enquiries-form {
+  &__price {
+    margin-top: 10px;
+    bottom: 20px;
+    right: 20px;
+    font-weight: 600;
+    color: darken($color-primary-green, 10%);
+    display: block;
+    span {
+      color: #393939;
+      font-weight: 400;
+    }
+  }
+}

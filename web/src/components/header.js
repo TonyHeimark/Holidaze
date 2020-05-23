@@ -1,12 +1,24 @@
 import React from "react";
 import { Link } from "gatsby";
 import { Location } from "@reach/router";
-import Icon from "./icon";
+import { logout } from "../lib/auth";
+import { navigate } from "gatsby";
+import { useSelector, useDispatch } from "react-redux";
+import { setIsLoggedIn } from "../state/loggedIn";
 
+import Icon from "./icon";
 import logo from "../assets/logo.svg";
 import logoDark from "../assets/logo-dark.svg";
 
 const Header = ({ onHideNav, onShowNav, showNav, siteTitle }) => {
+  const isLoggedIn = useSelector(state => state.isLoggedIn.isLoggedIn);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(setIsLoggedIn(false));
+    logout();
+    navigate("/");
+  };
   return (
     <Location>
       {({ location }) => {
@@ -25,11 +37,25 @@ const Header = ({ onHideNav, onShowNav, showNav, siteTitle }) => {
 
               <nav className={`header__nav ${showNav && "header__showNav"}`}>
                 <ul>
+                  {isLoggedIn && (
+                    <li>
+                      <Link to="/dashboard/">Dashboard</Link>
+                    </li>
+                  )}
                   <li>
                     <Link to="/browse/">Browse</Link>
                   </li>
+                  {!isLoggedIn && (
+                    <li>
+                      <Link to="/contact/">Contact</Link>
+                    </li>
+                  )}
                   <li>
-                    <Link to="/signin/">Sign in</Link>
+                    {isLoggedIn ? (
+                      <button onClick={handleLogout}>Sign out</button>
+                    ) : (
+                      <Link to="/signin/">Sign in</Link>
+                    )}
                   </li>
                 </ul>
               </nav>

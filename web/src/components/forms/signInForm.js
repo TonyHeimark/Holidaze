@@ -38,7 +38,7 @@ const SignInForm = ({
         }}
       />
       <button className="signin-form__button" onClick={handleSignIn}>
-        Sign In
+        <span>Sign In</span>
       </button>
     </div>
   );

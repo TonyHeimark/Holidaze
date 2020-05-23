@@ -19,6 +19,5 @@ export const isLoggedIn = () => {
 };
 
 export const logout = () => {
-  setIsLoggedIn(false); // state
   localStorage.removeItem("isLoggedIn");
 };

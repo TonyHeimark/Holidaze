@@ -2,7 +2,7 @@
   box-sizing: border-box;
   max-width: 1300px;
   padding: 1.5em;
-  margin: 0 auto;
+  margin: 100px auto 0;
 
   @include media-min-small {
     padding: 2em;

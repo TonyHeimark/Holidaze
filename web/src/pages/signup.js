@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { navigate } from "gatsby";
+import { navigate, Link } from "gatsby";
 import { setUser } from "../lib/auth";
 import { useSelector } from "react-redux";
 import SignUpForm from "../components/forms/signUpForm";
+
+import logo from "../assets/logo-dark.svg";
 
 const SignUpPage = () => {
   const isLoggedIn = useSelector(state => state.isLoggedIn.isLoggedIn);
@@ -37,12 +39,23 @@ const SignUpPage = () => {
   return (
     <div className="sign-up">
       <div className="sign-up__wrapper">
+        <Link to="/">
+          <img className="sign-up__brand-img" src={logo} />
+        </Link>
         <SignUpForm
           handleSignUp={handleSignUp}
           setConfirmPassword={setConfirmPassword}
           setPassword={setPassword}
           setUserName={setUserName}
         />
+        <div className="sign-up__link-box">
+          <Link className="sign-up__link" to="/signin">
+            Already have an account? - Sign in here.
+          </Link>
+          <Link className="sign-in__link" to="/">
+            Go back to home-page.
+          </Link>
+        </div>
       </div>
     </div>
   );

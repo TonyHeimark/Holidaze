@@ -73,7 +73,7 @@ const Filters = () => {
       >
         <DatePicker
           selected={filters.checkin}
-          placeholderText="dd/mm/yyyy"
+          placeholderText="mm/dd/yyyy"
           onChange={e => dispatch(setCheckin(e))}
           maxDate={filters.checkout}
           minDate={today}
@@ -83,7 +83,7 @@ const Filters = () => {
 
         <DatePicker
           selected={filters.checkout}
-          placeholderText="dd/mm/yyyy"
+          placeholderText="mm/dd/yyyy"
           onChange={e => dispatch(setCheckout(e))}
           minDate={filters.checkin}
         />
@@ -105,38 +105,42 @@ const Filters = () => {
         Type of place
       </label>
       <div name="type" className="filters__checkbox">
-        <button
+        <div
+          tabIndex="0"
           className={`filters__checkbox-button ${filters &&
             filters.establishmentType.includes("Hotel room") &&
             "filters__checkbox-button--active"}`}
           onClick={handleTypes}
         >
           Hotel room
-        </button>
-        <button
+        </div>
+        <div
+          tabIndex="0"
           className={`filters__checkbox-button ${filters &&
             filters.establishmentType.includes("Entire place") &&
             "filters__checkbox-button--active"}`}
           onClick={handleTypes}
         >
           Entire place
-        </button>
-        <button
+        </div>
+        <div
+          tabIndex="0"
           className={`filters__checkbox-button ${filters &&
             filters.establishmentType.includes("Shared room") &&
             "filters__checkbox-button--active"}`}
           onClick={handleTypes}
         >
           Shared room
-        </button>
-        <button
+        </div>
+        <div
+          tabIndex="0"
           className={`filters__checkbox-button ${filters &&
             filters.establishmentType.includes("Private room") &&
             "filters__checkbox-button--active"}`}
           onClick={handleTypes}
         >
           Private room
-        </button>
+        </div>
       </div>
       <label className="filters__label" htmlFor="price">
         Price

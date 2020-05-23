@@ -1,11 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import DatePicker from "react-datepicker";
+import { buildImageObj } from "../../lib/helpers";
+import { imageUrlFor } from "../../lib/image-url";
+import { useSelector } from "react-redux";
 
-const EnquiriesForm = () => {
+const EnquiriesForm = ({ title, image, availableFrom, availableUntill, price, id, maxGuests }) => {
+  const filters = useSelector(state => state.filters);
   const [inputName, setInputName] = useState("");
   const [inputEmail, setInputEmail] = useState("");
   const [inputPhone, setInputPhone] = useState("");
-  const [inputGuests, setInputGuests] = useState("");
-  const [inputMessage, setInputMessage] = useState("");
+  const [checkin, setCheckin] = useState(filters.checkin || null);
+  const [checkout, setCheckout] = useState(filters.checkout || null);
+  const [inputGuests, setInputGuests] = useState(filters.guests || 1);
+  const [totalPrice, setTotalPrice] = useState(null);
+  const [availableFromDate, setAvailableFromDate] = useState(new Date(availableFrom));
+  const [availableUntillDate, setAvailableUntillDate] = useState(new Date(availableUntill));
+
+  useEffect(() => {
+    if (checkin && checkout) {
+      const timeDifference = checkin.getTime() - checkout.getTime();
+      const dayDifference = timeDifference / (1000 * 3600 * 24);
+      setTotalPrice(Math.abs(price * dayDifference));
+    } else {
+      setTotalPrice(null);
+    }
+  }, [checkin, checkout, price]);
 
   const handleFormSubmit = event => {
     // const { isFormValid } = this.state;
@@ -20,8 +39,9 @@ const EnquiriesForm = () => {
             name: inputName,
             email: inputEmail,
             phone: inputPhone,
-            guests: inputGuests,
-            message: inputMessage
+            check_in: checkin,
+            check_out: checkout,
+            guests: inputGuests
           }
         }
       ];
@@ -46,47 +66,107 @@ const EnquiriesForm = () => {
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <input
-        type="text"
-        value={inputName}
-        name="name"
-        onChange={e => {
-          setInputName(e.target.value);
-        }}
-      />
-      <input
-        type="email"
-        value={inputEmail}
-        name="email"
-        onChange={e => {
-          setInputEmail(e.target.value);
-        }}
-      />
-      <input
-        type="number"
-        value={inputPhone}
-        name="phone"
-        onChange={e => {
-          setInputPhone(e.target.value);
-        }}
-      />
-      <input
-        type="number"
-        value={inputGuests}
-        name="guests"
-        onChange={e => {
-          setInputGuests(e.target.value);
-        }}
-      />
-      <textarea
-        type="textarea"
-        value={inputMessage}
-        name="message"
-        onChange={e => {
-          setInputMessage(e.target.value);
-        }}
-      />
-      <button type="submit">Send</button>
+      <div className="create-establishment__top-container">
+        <div className="create-establishment__input-container">
+          <label className="filters__label" htmlFor="name">
+            Name
+          </label>
+
+          <input
+            className="filters__input"
+            type="text"
+            value={inputName}
+            name="name"
+            onChange={e => {
+              setInputName(e.target.value);
+            }}
+          />
+          <label className="filters__label" htmlFor="email">
+            Email
+          </label>
+          <input
+            className="filters__input"
+            type="email"
+            value={inputEmail}
+            name="email"
+            onChange={e => {
+              setInputEmail(e.target.value);
+            }}
+          />
+          <label className="filters__label" htmlFor="phone">
+            Phone
+          </label>
+          <input
+            className="filters__input"
+            type="phone"
+            value={inputPhone}
+            name="phone"
+            onChange={e => {
+              setInputEmail(e.target.value);
+            }}
+          />
+          <label className="filters__label" htmlFor="time">
+            Check-in / Check-out
+          </label>
+          <div className="filters__input filters__input--wrapper" type="text" name="time">
+            <DatePicker
+              selected={checkin}
+              onChange={e => setCheckin(e)}
+              minDate={availableFromDate}
+              maxDate={checkout || availableUntillDate}
+            />
+
+            <span> | </span>
+
+            <DatePicker
+              selected={checkout}
+              onChange={e => setCheckout(e)}
+              minDate={checkin || availableFromDate}
+              maxDate={availableUntillDate}
+            />
+          </div>
+
+          <label className="filters__label" htmlFor="guests">
+            Guests
+          </label>
+          <input
+            className="filters__input filters__input--small"
+            placeholder="0"
+            type="number"
+            value={inputGuests}
+            name="guests"
+            onChange={e => {
+              setInputGuests(e.target.value);
+            }}
+          />
+        </div>
+        <div className="create-establishment__image-container">
+          <div name="currentImage" className="create-establishment__image">
+            <label className="filters__label filters__label--green" htmlFor="currentImage">
+              {title}
+            </label>
+            <img
+              className="dashboard-listing__image"
+              src={imageUrlFor(buildImageObj(image))
+                .width(400)
+                .url()}
+              alt="current listing image"
+            />
+            <span className="enquiries-form__price">
+              {price} NOK<span> / night</span>
+            </span>
+            {totalPrice && (
+              <span className="enquiries-form__price">
+                {totalPrice} NOK<span> / total</span>
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <button className="read-message__button" type="submit">
+        <span>Send</span>
+      </button>
     </form>
   );
 };

@@ -4,18 +4,29 @@
 @import "./components/header.scss";
 @import "./components/layout.scss";
 @import "./components/container.scss";
-@import "./components/blog-post.scss";
 @import "./components/author-list.scss";
+@import "./components/establishment.scss";
 
 @import "./components/bits/filters.scss";
+@import "./components/bits/readMessage.scss";
+@import "./components/bits/readEnquiries.scss";
 @import "./components/bits/datePicker.scss";
 @import "./components/bits/dateField.scss";
 @import "./components/bits/initialFilter.scss";
 @import "./components/bits/establishmentListing.scss";
 @import "./components/bits/inputRange.scss";
 
+@import "./components/forms/enquiriesForm.scss";
+@import "./components/forms/signInForm.scss";
+@import "./components/forms/signUpForm.scss";
+@import "./components/forms/createEstablishmentForm.scss";
+
 @import "./pages/index.scss";
 @import "./pages/browse.scss";
+@import "./pages/dashboard.scss";
+@import "./pages/signIn.scss";
+@import "./pages/signUp.scss";
+@import "./pages/contact.scss";
 
 html {
   font-family: $font-family-sans;
