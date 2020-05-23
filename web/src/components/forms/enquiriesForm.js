@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
+import DatepickerInput from "../bits/datePickerInput";
 import { buildImageObj } from "../../lib/helpers";
 import { imageUrlFor } from "../../lib/image-url";
 import { useSelector } from "react-redux";
@@ -111,6 +112,7 @@ const EnquiriesForm = ({ title, image, availableFrom, availableUntill, price, id
           <div className="filters__input filters__input--wrapper" type="text" name="time">
             <DatePicker
               withPortal
+              customInput={<DatepickerInput />}
               selected={checkin}
               onChange={e => setCheckin(e)}
               minDate={availableFromDate}
@@ -120,6 +122,7 @@ const EnquiriesForm = ({ title, image, availableFrom, availableUntill, price, id
             <span> | </span>
 
             <DatePicker
+              customInput={<DatepickerInput />}
               withPortal
               selected={checkout}
               onChange={e => setCheckout(e)}

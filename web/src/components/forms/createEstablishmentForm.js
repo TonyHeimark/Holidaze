@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
+import DatepickerInput from "../bits/datePickerInput";
 
 const CreateEstablishmentForm = ({ setModalShow, facilities }) => {
   const [today, setToday] = useState(new Date());
@@ -182,6 +183,8 @@ const CreateEstablishmentForm = ({ setModalShow, facilities }) => {
               onChange={e => setAvailableFrom(e)}
               maxDate={availableUntill}
               minDate={today}
+              withPortal
+              customInput={<DatepickerInput />}
             />
 
             <span> | </span>
@@ -190,6 +193,8 @@ const CreateEstablishmentForm = ({ setModalShow, facilities }) => {
               selected={availableUntill}
               onChange={e => setAvailableUntill(e)}
               minDate={setAvailableFrom}
+              withPortal
+              customInput={<DatepickerInput />}
             />
           </div>
           <label className="filters__label" htmlFor="price">

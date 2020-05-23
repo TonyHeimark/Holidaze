@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Location } from "@reach/router";
 import Layout from "../components/layout";
 
+import "react-datepicker/dist/react-datepicker.css";
 import "../styles/layout.scss";
 
 const query = graphql`

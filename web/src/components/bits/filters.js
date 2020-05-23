@@ -11,8 +11,7 @@ import {
 } from "../../state/filters";
 import InputRange from "react-input-range";
 import DatePicker from "react-datepicker";
-
-import "react-datepicker/dist/react-datepicker.css";
+import DatepickerInput from "../bits/datePickerInput";
 
 const Filters = () => {
   const [today, setToday] = useState(new Date());
@@ -72,11 +71,13 @@ const Filters = () => {
         name="time"
       >
         <DatePicker
+          withPortal
           selected={filters.checkin}
           placeholderText="mm/dd/yyyy"
           onChange={e => dispatch(setCheckin(e))}
           maxDate={filters.checkout}
           minDate={today}
+          customInput={<DatepickerInput />}
         />
 
         <span> | </span>
@@ -86,6 +87,8 @@ const Filters = () => {
           placeholderText="mm/dd/yyyy"
           onChange={e => dispatch(setCheckout(e))}
           minDate={filters.checkin}
+          withPortal
+          customInput={<DatepickerInput />}
         />
       </div>
 

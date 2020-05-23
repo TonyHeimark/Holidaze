@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
+import DatepickerInput from "../bits/datePickerInput";
 import { buildImageObj } from "../../lib/helpers";
 import { imageUrlFor } from "../../lib/image-url";
 
@@ -191,6 +192,8 @@ const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
               onChange={e => setAvailableFrom(e)}
               maxDate={availableUntill}
               minDate={today}
+              withPortal
+              customInput={<DatepickerInput />}
             />
 
             <span> | </span>
@@ -199,6 +202,8 @@ const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
               selected={availableUntill}
               onChange={e => setAvailableUntill(e)}
               minDate={availableFrom}
+              withPortal
+              customInput={<DatepickerInput />}
             />
           </div>
           <label className="filters__label" htmlFor="price">

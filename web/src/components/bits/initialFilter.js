@@ -3,9 +3,8 @@ import { Link } from "gatsby";
 import { useSelector, useDispatch } from "react-redux";
 import { setCheckin, setCheckout, setPrice, setGuests } from "../../state/filters";
 import DatePicker from "react-datepicker";
+import DatepickerInput from "../bits/datePickerInput";
 import InputRange from "react-input-range";
-
-import "react-datepicker/dist/react-datepicker.css";
 
 import searchIcon from "../../assets/search-solid.svg";
 
@@ -13,7 +12,6 @@ const InitialFilter = () => {
   const [today, setToday] = useState(new Date());
   const filters = useSelector(state => state.filters);
   const dispatch = useDispatch();
-  console.log(filters);
 
   return (
     <div className="initial-filter">
@@ -49,6 +47,8 @@ const InitialFilter = () => {
             onChange={e => dispatch(setCheckin(e))}
             maxDate={filters.checkout}
             minDate={today}
+            withPortal
+            customInput={<DatepickerInput />}
           />
 
           <span> | </span>
@@ -58,6 +58,8 @@ const InitialFilter = () => {
             placeholderText="mm/dd/yyyy"
             onChange={e => dispatch(setCheckout(e))}
             minDate={filters.checkin || today}
+            withPortal
+            customInput={<DatepickerInput />}
           />
         </div>
 
