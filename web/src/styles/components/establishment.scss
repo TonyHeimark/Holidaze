@@ -191,6 +191,9 @@
       span {
         margin-left: 10px;
       }
+      @media (max-width: 600px) {
+        min-width: unset;
+      }
     }
   }
 
