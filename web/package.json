@@ -39,10 +39,7 @@
     "react-helmet": "^5.2.1"
   },
   "dependencies": {
-    "gatsby": "^2.9.2",
-    "gatsby-cli": "^2.12.34",
     "gatsby-image": "^2.0.41",
-    "gatsby-plugin-netlify-cache": "^1.2.0",
     "gatsby-plugin-sass": "^2.1.27",
     "netlify-lambda": "^1.6.3",
     "node-sass": "^4.13.1",
