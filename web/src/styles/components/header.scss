@@ -39,6 +39,23 @@
     }
   }
 
+  &__nav-close {
+    position: absolute;
+    right: 15px;
+    top: 35px;
+    z-index: 999;
+    width: 30px;
+    height: 30px;
+    color: white;
+    font-weight: 600;
+    font-size: 30px;
+    padding: 10px;
+    cursor: pointer;
+    @media (min-width: 675px) {
+      display: none;
+    }
+  }
+
   &__toggleNavButton {
     appearance: none;
     font-size: 25px;
@@ -48,8 +65,14 @@
     padding: calc(14 / 17 / 2 * 1rem);
     outline: none;
     color: inherit;
+    margin-bottom: -20px;
 
-    svg {
+    cursor: pointer;
+
+    img {
+      width: 40px;
+      height: 40px;
+      color: white;
       display: block;
       fill: inherit;
     }
@@ -61,8 +84,13 @@
 
   &__nav {
     display: none;
+    position: relative;
 
     ul {
+      width: 500px;
+      position: absolute;
+      bottom: 0;
+      right: 0;
       margin: 0;
       padding: 0;
       button {
@@ -125,7 +153,46 @@
     }
   }
 
-  &__showNav {
-    display: block;
+  @media (max-width: 675px) {
+    &__showNav {
+      display: block;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.3s ease-in;
+      height: 100vh;
+      background: $color-dark-green;
+      margin-top: -69px;
+
+      ul {
+        width: 100%;
+        margin-top: -100px;
+        padding: 0;
+        top: 0;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      ul li a,
+      button {
+        width: 100%;
+        margin: 10px auto;
+        padding: 0;
+        font-size: 1.2rem;
+        color: white;
+      }
+      ul li button {
+        margin: 60px auto;
+      }
+      &--open {
+        max-height: 100vh;
+        position: absolute;
+
+        transition: max-height 0.3s ease-out;
+        display: block;
+      }
+    }
   }
 }

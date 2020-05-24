@@ -1,10 +1,13 @@
 import React from "react";
-import HamburgerIcon from "./hamburger";
+import HamburgerDark from "../../assets/hamburger-dark.svg";
+import HamburgerWhite from "../../assets/hamburger-white.svg";
 
 const Icon = props => {
   switch (props.symbol) {
-    case "hamburger":
-      return <HamburgerIcon />;
+    case "dark":
+      return <img src={HamburgerDark} alt="navigation menu" />;
+    case "white":
+      return <img src={HamburgerWhite} alt="navigation menu" />;
     default:
       return <span>Unknown icon: {props.symbol}</span>;
   }

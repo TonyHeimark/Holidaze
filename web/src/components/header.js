@@ -23,8 +23,12 @@ const Header = ({ onHideNav, onShowNav, showNav, siteTitle }) => {
     <Location>
       {({ location }) => {
         return (
-          <div className={`header ${location && location.pathname === "/" && "header--white"}`}>
-            <div className="header__wrapper">
+          <div
+            className={`header ${location && location.pathname === "/" && "header--white"} ${
+              showNav ? "header--fixed" : ""
+            }`}
+          >
+            <div className={`header__wrapper ${showNav ? "header__wrapper--fixed" : ""}`}>
               <div className={"header__branding"}>
                 <Link to="/">
                   <img src={location && location.pathname === "/" ? logo : logoDark} alt="logo" />
@@ -32,10 +36,19 @@ const Header = ({ onHideNav, onShowNav, showNav, siteTitle }) => {
               </div>
 
               <button className="header__toggleNavButton" onClick={showNav ? onHideNav : onShowNav}>
-                <Icon symbol="hamburger" />
+                <Icon symbol={location && location.pathname === "/" ? "white" : "dark"} />
               </button>
 
-              <nav className={`header__nav ${showNav && "header__showNav"}`}>
+              <nav
+                className={`header__nav ${
+                  showNav
+                    ? "header__showNav header__showNav--open"
+                    : "header__showNav header__showNav--closed"
+                }`}
+              >
+                <span onClick={showNav ? onHideNav : onShowNav} className="header__nav-close">
+                  X
+                </span>
                 <ul>
                   {isLoggedIn && (
                     <li>
