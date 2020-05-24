@@ -33,18 +33,19 @@ const Filters = ({ filterOpen }) => {
 
   return (
     <div className={`filters ${filterOpen && "filters--opacity"}`}>
-      <label className="forms__label" htmlFor="searcg">
-        Search
-      </label>
-      <input
-        className="forms__input"
-        placeholder="Search for place"
-        value={filters.search}
-        type="text"
-        name="search"
-        onChange={e => dispatch(setSearch(e.target.value))}
-      />
-      {/*
+      <div className={`filters__wrapper ${filterOpen && "filters__wrapper--open"}`}>
+        <label className="forms__label" htmlFor="searcg">
+          Search
+        </label>
+        <input
+          className="forms__input"
+          placeholder="Search for place"
+          value={filters.search}
+          type="text"
+          name="search"
+          onChange={e => dispatch(setSearch(e.target.value))}
+        />
+        {/*
         
         <label className="forms__label" htmlFor="location">
           Location
@@ -60,102 +61,103 @@ const Filters = ({ filterOpen }) => {
 
 
         */}
-      <label className="forms__label" htmlFor="time">
-        Check-in / Check-out
-      </label>
+        <label className="forms__label" htmlFor="time">
+          Check-in / Check-out
+        </label>
 
-      <div
-        className="forms__input forms__input--wrapper"
-        placeholder="How long is your stay?"
-        type="text"
-        name="time"
-      >
-        <DatePicker
-          withPortal
-          selected={filters.checkin}
-          placeholderText="mm/dd/yyyy"
-          onChange={e => dispatch(setCheckin(e))}
-          maxDate={filters.checkout}
-          minDate={today}
-          customInput={<DatepickerInput />}
+        <div
+          className="forms__input forms__input--wrapper"
+          placeholder="How long is your stay?"
+          type="text"
+          name="time"
+        >
+          <DatePicker
+            withPortal
+            selected={filters.checkin}
+            placeholderText="mm/dd/yyyy"
+            onChange={e => dispatch(setCheckin(e))}
+            maxDate={filters.checkout}
+            minDate={today}
+            customInput={<DatepickerInput />}
+          />
+
+          <span> | </span>
+
+          <DatePicker
+            selected={filters.checkout}
+            placeholderText="mm/dd/yyyy"
+            onChange={e => dispatch(setCheckout(e))}
+            minDate={filters.checkin}
+            withPortal
+            customInput={<DatepickerInput />}
+          />
+        </div>
+
+        <label className="forms__label" htmlFor="guests">
+          Guests
+        </label>
+        <input
+          className="forms__input forms__input--small"
+          placeholder="0"
+          value={filters.guests}
+          type="number"
+          name="guests"
+          onChange={e => dispatch(setGuests(e.target.value))}
         />
 
-        <span> | </span>
-
-        <DatePicker
-          selected={filters.checkout}
-          placeholderText="mm/dd/yyyy"
-          onChange={e => dispatch(setCheckout(e))}
-          minDate={filters.checkin}
-          withPortal
-          customInput={<DatepickerInput />}
+        <label className="forms__label" htmlFor="type">
+          Type of place
+        </label>
+        <div name="type" className="forms__checkbox">
+          <div
+            tabIndex="0"
+            className={`forms__checkbox-button ${filters &&
+              filters.establishmentType.includes("Hotel room") &&
+              "forms__checkbox-button--active"}`}
+            onClick={handleTypes}
+          >
+            Hotel room
+          </div>
+          <div
+            tabIndex="0"
+            className={`forms__checkbox-button ${filters &&
+              filters.establishmentType.includes("Entire place") &&
+              "forms__checkbox-button--active"}`}
+            onClick={handleTypes}
+          >
+            Entire place
+          </div>
+          <div
+            tabIndex="0"
+            className={`forms__checkbox-button ${filters &&
+              filters.establishmentType.includes("Shared room") &&
+              "forms__checkbox-button--active"}`}
+            onClick={handleTypes}
+          >
+            Shared room
+          </div>
+          <div
+            tabIndex="0"
+            className={`forms__checkbox-button ${filters &&
+              filters.establishmentType.includes("Private room") &&
+              "forms__checkbox-button--active"}`}
+            onClick={handleTypes}
+          >
+            Private room
+          </div>
+        </div>
+        <label className="forms__label" htmlFor="price">
+          Price
+        </label>
+        <InputRange
+          step={2}
+          maxValue={3000}
+          minValue={0}
+          value={filters.price}
+          formatLabel={value => `${value},-`}
+          onChange={value => dispatch(setPrice(value))}
         />
       </div>
-
-      <label className="forms__label" htmlFor="guests">
-        Guests
-      </label>
-      <input
-        className="forms__input forms__input--small"
-        placeholder="0"
-        value={filters.guests}
-        type="number"
-        name="guests"
-        onChange={e => dispatch(setGuests(e.target.value))}
-      />
-
-      <label className="forms__label" htmlFor="type">
-        Type of place
-      </label>
-      <div name="type" className="forms__checkbox">
-        <div
-          tabIndex="0"
-          className={`forms__checkbox-button ${filters &&
-            filters.establishmentType.includes("Hotel room") &&
-            "forms__checkbox-button--active"}`}
-          onClick={handleTypes}
-        >
-          Hotel room
-        </div>
-        <div
-          tabIndex="0"
-          className={`forms__checkbox-button ${filters &&
-            filters.establishmentType.includes("Entire place") &&
-            "forms__checkbox-button--active"}`}
-          onClick={handleTypes}
-        >
-          Entire place
-        </div>
-        <div
-          tabIndex="0"
-          className={`forms__checkbox-button ${filters &&
-            filters.establishmentType.includes("Shared room") &&
-            "forms__checkbox-button--active"}`}
-          onClick={handleTypes}
-        >
-          Shared room
-        </div>
-        <div
-          tabIndex="0"
-          className={`forms__checkbox-button ${filters &&
-            filters.establishmentType.includes("Private room") &&
-            "forms__checkbox-button--active"}`}
-          onClick={handleTypes}
-        >
-          Private room
-        </div>
-      </div>
-      <label className="forms__label" htmlFor="price">
-        Price
-      </label>
-      <InputRange
-        step={2}
-        maxValue={3000}
-        minValue={0}
-        value={filters.price}
-        formatLabel={value => `${value},-`}
-        onChange={value => dispatch(setPrice(value))}
-      />
     </div>
   );
 };
