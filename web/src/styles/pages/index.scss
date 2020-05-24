@@ -10,6 +10,10 @@
     flex-direction: row;
     justify-content: space-between;
     margin-top: 20vh;
+    @media (max-width: 960px) {
+      margin: 0;
+      flex-direction: column;
+    }
   }
 
   &__text {
@@ -19,6 +23,14 @@
     font-size: 2.6rem;
     max-width: 670px;
     padding: 100px 0;
+    @media (max-width: 1200px) {
+      font-size: 2rem;
+    }
+    @media (max-width: 960px) {
+      padding: 150px 0 50px;
+      max-width: 100%;
+      margin: 0 auto;
+    }
 
     h1 {
       max-width: 100%;
@@ -32,6 +44,14 @@
       left: 15%;
       top: 200px;
       color: $color-white;
+      @media (max-width: 1200px) {
+        font-size: 7rem;
+        left: 10%;
+      }
+      @media (max-width: 960px) {
+        position: static;
+        font-size: 4rem;
+      }
     }
   }
 }

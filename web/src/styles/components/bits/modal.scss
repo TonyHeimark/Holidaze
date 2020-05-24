@@ -1,0 +1,41 @@
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.911);
+  z-index: 999;
+  min-height: 200vh;
+
+  &__box {
+    min-height: 100px;
+    width: 100%;
+    margin: 150px auto 0;
+    max-width: 600px;
+    background: #fff;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    padding: 100px 40px;
+    position: relative;
+  }
+
+  &__close-button {
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    background: none;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: #393939;
+    &:hover {
+      color: black;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

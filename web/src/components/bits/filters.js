@@ -13,7 +13,7 @@ import InputRange from "react-input-range";
 import DatePicker from "react-datepicker";
 import DatepickerInput from "../bits/datePickerInput";
 
-const Filters = () => {
+const Filters = ({ filterOpen }) => {
   const [today, setToday] = useState(new Date());
   const filters = useSelector(state => state.filters);
   const dispatch = useDispatch();
@@ -32,12 +32,12 @@ const Filters = () => {
   };
 
   return (
-    <div className="filters">
-      <label className="filters__label" htmlFor="searcg">
+    <div className={`filters ${filterOpen && "filters--opacity"}`}>
+      <label className="forms__label" htmlFor="searcg">
         Search
       </label>
       <input
-        className="filters__input"
+        className="forms__input"
         placeholder="Search for place"
         value={filters.search}
         type="text"
@@ -46,11 +46,11 @@ const Filters = () => {
       />
       {/*
         
-        <label className="filters__label" htmlFor="location">
+        <label className="forms__label" htmlFor="location">
           Location
         </label>
         <input
-          className="filters__input"
+          className="forms__input"
           placeholder="Where do you want to live?"
           value={filters.location}
           type="text"
@@ -60,12 +60,12 @@ const Filters = () => {
 
 
         */}
-      <label className="filters__label" htmlFor="time">
+      <label className="forms__label" htmlFor="time">
         Check-in / Check-out
       </label>
 
       <div
-        className="filters__input filters__input--wrapper"
+        className="forms__input forms__input--wrapper"
         placeholder="How long is your stay?"
         type="text"
         name="time"
@@ -92,11 +92,11 @@ const Filters = () => {
         />
       </div>
 
-      <label className="filters__label" htmlFor="guests">
+      <label className="forms__label" htmlFor="guests">
         Guests
       </label>
       <input
-        className="filters__input filters__input--small"
+        className="forms__input forms__input--small"
         placeholder="0"
         value={filters.guests}
         type="number"
@@ -104,48 +104,48 @@ const Filters = () => {
         onChange={e => dispatch(setGuests(e.target.value))}
       />
 
-      <label className="filters__label" htmlFor="type">
+      <label className="forms__label" htmlFor="type">
         Type of place
       </label>
-      <div name="type" className="filters__checkbox">
+      <div name="type" className="forms__checkbox">
         <div
           tabIndex="0"
-          className={`filters__checkbox-button ${filters &&
+          className={`forms__checkbox-button ${filters &&
             filters.establishmentType.includes("Hotel room") &&
-            "filters__checkbox-button--active"}`}
+            "forms__checkbox-button--active"}`}
           onClick={handleTypes}
         >
           Hotel room
         </div>
         <div
           tabIndex="0"
-          className={`filters__checkbox-button ${filters &&
+          className={`forms__checkbox-button ${filters &&
             filters.establishmentType.includes("Entire place") &&
-            "filters__checkbox-button--active"}`}
+            "forms__checkbox-button--active"}`}
           onClick={handleTypes}
         >
           Entire place
         </div>
         <div
           tabIndex="0"
-          className={`filters__checkbox-button ${filters &&
+          className={`forms__checkbox-button ${filters &&
             filters.establishmentType.includes("Shared room") &&
-            "filters__checkbox-button--active"}`}
+            "forms__checkbox-button--active"}`}
           onClick={handleTypes}
         >
           Shared room
         </div>
         <div
           tabIndex="0"
-          className={`filters__checkbox-button ${filters &&
+          className={`forms__checkbox-button ${filters &&
             filters.establishmentType.includes("Private room") &&
-            "filters__checkbox-button--active"}`}
+            "forms__checkbox-button--active"}`}
           onClick={handleTypes}
         >
           Private room
         </div>
       </div>
-      <label className="filters__label" htmlFor="price">
+      <label className="forms__label" htmlFor="price">
         Price
       </label>
       <InputRange

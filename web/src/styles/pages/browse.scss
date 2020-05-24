@@ -1,17 +1,71 @@
 .browse {
   &__content {
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     min-height: 100vh;
+    @media (max-width: 1200px) {
+      display: block;
+    }
   }
 
   &__filters {
     padding-right: 75px;
     border-right: 1px solid #70707031;
+    z-index: 9;
+    background: white;
+    @media (max-width: 1200px) {
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+      border-radius: 15px;
+      padding: 30px 20px;
+      max-width: 0px;
+      overflow: hidden;
+      position: absolute;
+      transition: 0.3s ease-in;
+      top: -50px;
+      left: -2em;
+      max-height: 40px;
+      min-height: 25px;
+
+      &--open {
+        max-width: 500px;
+        max-height: 750px;
+        transition: 0.3s ease-out;
+      }
+    }
+    @media (max-width: 450px) {
+      left: -4%;
+    }
+  }
+
+  &__filters-headline {
+    display: none;
+    @media (max-width: 1200px) {
+      padding: 10 10px 10px 0px;
+      display: block;
+      text-orientation: mixed;
+      writing-mode: vertical-rl;
+      opacity: 1;
+      color: $color-dark-green;
+      position: absolute;
+      font-size: 18px;
+      font-weight: 600;
+      left: 10px;
+      right: unset;
+      top: 10px;
+      cursor: pointer;
+
+      &--open {
+        writing-mode: unset;
+        left: unset;
+        right: 10px;
+      }
+    }
   }
 
   &__listings {
     max-width: 750px;
+    margin: 0 auto;
   }
 }

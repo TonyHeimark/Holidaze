@@ -36,7 +36,7 @@ const InitialFilter = () => {
         </label>
 
         <div
-          className="filters__input filters__input--wrapper"
+          className="forms__input forms__input--wrapper"
           placeholder="How long is your stay?"
           type="text"
           name="time"
@@ -74,7 +74,7 @@ const InitialFilter = () => {
           name="guests"
           onChange={e => dispatch(setGuests(e.target.value))}
         />
-        <label className="filters__label" htmlFor="price">
+        <label className="forms__label" htmlFor="price">
           Price
         </label>
         <InputRange

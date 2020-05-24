@@ -1,88 +1,12 @@
 .filters {
   max-width: 320px;
   width: 100%;
+  padding-bottom: 30px;
 
-  &__label {
-    display: block;
-    padding: 10px 0;
-    &--green {
-      color: $color-dark-green;
-    }
-  }
-
-  &__input {
-    display: block;
-    width: calc(100% - 50px);
-    margin-bottom: 30px;
-    font-size: 16px;
-    border: none;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
-    border-radius: 15px;
-    min-height: 50px;
-    padding: 0 20px;
-    font-weight: 600;
-    transition: 0.3s;
-
-    &:focus {
-      outline: none;
-      box-shadow: 0 5px 10px rgba(8, 194, 39, 0.15);
-      transition: 0.3s;
-    }
-
-    &--small {
-      max-width: 70px;
-    }
-
-    &--wrapper {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      position: relative;
-      span {
-        margin: 3px 0 0 -15px;
-        font-size: 28px;
-        color: #39393998;
-        position: absolute;
-        left: 50%;
-      }
-    }
-  }
-
-  &__textarea {
-    min-height: 175px;
-    padding-top: 20px;
-    max-width: 580px;
-  }
-
-  &__checkbox {
-    margin-bottom: 15px;
-  }
-
-  &__checkbox-button {
-    display: inline-block;
-    background: $color-white;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
-    border: none;
-    padding: 10px 15px;
-    color: #393939;
-    transition: 0.3s;
-    border-radius: 10px;
-    margin: 0 15px 15px 0;
-    font-size: 14px;
-    font-family: $montserrat;
-    font-weight: 600;
-    cursor: pointer;
-
-    &:focus {
-      outline: none;
-      box-shadow: 0 5px 10px rgba(8, 194, 39, 0.15);
-      transition: 0.3s;
-    }
-
-    &--active {
-      background: $color-primary-green;
-      color: white;
-      transition: 0.3s;
+  @media (max-width: 1200px) {
+    display: none;
+    &--opacity {
+      display: block;
     }
   }
 }

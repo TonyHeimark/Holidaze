@@ -11,11 +11,11 @@
     box-sizing: border-box;
     margin: 0 auto;
     max-width: 1600px;
-    padding: 1em;
+    padding: 1em 4%;
     display: flex;
 
     @include media-min-small {
-      padding: 1.5em 1.5em;
+      padding: 1.5em;
     }
   }
 

@@ -154,14 +154,14 @@ const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
   };
 
   return (
-    <form onSubmit={handleFormSubmit} className="create-establishment">
-      <div className="create-establishment__top-container">
-        <div className="create-establishment__input-container">
-          <label className="filters__label" htmlFor="title">
+    <form onSubmit={handleFormSubmit} className="establishment-form">
+      <div className="establishment-form__top-container">
+        <div className="establishment-form__input-container">
+          <label className="forms__label" htmlFor="title">
             Title
           </label>
           <input
-            className="filters__input"
+            className="forms__input"
             type="text"
             value={inputTitle}
             name="title"
@@ -170,11 +170,11 @@ const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
             }}
           />
 
-          <label className="filters__label" htmlFor="type">
+          <label className="forms__label" htmlFor="type">
             Type of place
           </label>
           <input
-            className="filters__input"
+            className="forms__input"
             type="text"
             value={inputType}
             name="type"
@@ -182,11 +182,11 @@ const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
               setInputType(e.target.value);
             }}
           />
-          <label className="filters__label" htmlFor="time">
+          <label className="forms__label" htmlFor="time">
             Available from / to
           </label>
 
-          <div className="filters__input filters__input--wrapper" type="text" name="time">
+          <div className="forms__input forms__input--wrapper" type="text" name="time">
             <DatePicker
               selected={availableFrom}
               onChange={e => setAvailableFrom(e)}
@@ -206,11 +206,11 @@ const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
               customInput={<DatepickerInput />}
             />
           </div>
-          <label className="filters__label" htmlFor="price">
+          <label className="forms__label" htmlFor="price">
             Price per night (NOK)
           </label>
           <input
-            className="filters__input"
+            className="forms__input"
             type="number"
             value={inputPrice}
             name="price"
@@ -219,8 +219,8 @@ const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
             }}
           />
         </div>
-        <div className="create-establishment__image-container">
-          <label className="filters__label" htmlFor="file">
+        <div className="establishment-form__image-container">
+          <label className="forms__label" htmlFor="file">
             Upload image
           </label>
           <input
@@ -229,8 +229,8 @@ const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
             accept="image/jpeg, image/jpg, image/png, image/webp"
             onChange={handleFileSelect}
           />
-          <div name="currentImage" className="create-establishment__image">
-            <label className="filters__label" htmlFor="currentImage">
+          <div name="currentImage" className="establishment-form__image">
+            <label className="forms__label" htmlFor="currentImage">
               Current image
             </label>
             <img
@@ -244,13 +244,13 @@ const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
         </div>
       </div>
 
-      <div className="create-establishment__grid-container">
-        <div className="create-establishment__grid-item">
-          <label className="filters__label" htmlFor="bedrooms">
+      <div className="establishment-form__grid-container">
+        <div className="establishment-form__grid-item">
+          <label className="forms__label" htmlFor="bedrooms">
             Bedrooms
           </label>
           <input
-            className="filters__input filters__input--small"
+            className="forms__input forms__input--small"
             placeholder="0"
             type="number"
             value={inputBedrooms}
@@ -261,12 +261,12 @@ const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
           />
         </div>
 
-        <div className="create-establishment__grid-item">
-          <label className="filters__label" htmlFor="beds">
+        <div className="establishment-form__grid-item">
+          <label className="forms__label" htmlFor="beds">
             Beds
           </label>
           <input
-            className="filters__input filters__input--small"
+            className="forms__input forms__input--small"
             placeholder="0"
             type="number"
             value={inputBeds}
@@ -277,12 +277,12 @@ const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
           />
         </div>
 
-        <div className="create-establishment__grid-item">
-          <label className="filters__label" htmlFor="guests">
+        <div className="establishment-form__grid-item">
+          <label className="forms__label" htmlFor="guests">
             Max guests
           </label>
           <input
-            className="filters__input filters__input--small"
+            className="forms__input forms__input--small"
             placeholder="0"
             type="number"
             value={inputGuests}
@@ -292,12 +292,12 @@ const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
             }}
           />
         </div>
-        <div className="create-establishment__grid-item">
-          <label className="filters__label" htmlFor="rating">
+        <div className="establishment-form__grid-item">
+          <label className="forms__label" htmlFor="rating">
             Rating
           </label>
           <input
-            className="filters__input filters__input--small"
+            className="forms__input forms__input--small"
             placeholder="0"
             type="number"
             value={inputRating}
@@ -309,11 +309,11 @@ const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
         </div>
       </div>
 
-      <label className="filters__label" htmlFor="latitude">
+      <label className="forms__label" htmlFor="latitude">
         Latitude
       </label>
       <input
-        className="filters__input"
+        className="forms__input"
         type="number"
         value={inputLatitude}
         name="latitude"
@@ -321,11 +321,11 @@ const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
           setInputLatitude(e.target.value);
         }}
       />
-      <label className="filters__label" htmlFor="longitude">
+      <label className="forms__label" htmlFor="longitude">
         Longitude
       </label>
       <input
-        className="filters__input"
+        className="forms__input"
         type="number"
         value={inputLongitude}
         name="longitude"
@@ -333,11 +333,11 @@ const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
           setInputLongitude(e.target.value);
         }}
       />
-      <label className="filters__label" htmlFor="description">
+      <label className="forms__label" htmlFor="description">
         Description
       </label>
       <textarea
-        className="filters__input filters__textarea"
+        className="forms__input forms__textarea"
         type="textarea"
         value={inputDescription}
         name="description"
@@ -345,17 +345,17 @@ const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
           setInputDescription(e.target.value);
         }}
       />
-      <label className="filters__label" htmlFor="facilities">
+      <label className="forms__label" htmlFor="facilities">
         Facilities
       </label>
-      <div className="filters__checkbox" name="facilities">
+      <div className="forms__checkbox" name="facilities">
         {facilities &&
           facilities.map(f => (
             <div
               tabindex="0"
               key={f.node._id}
-              className={`filters__checkbox-button ${facilityKeys.includes(f.node._id) &&
-                "filters__checkbox-button--active"}`}
+              className={`forms__checkbox-button ${facilityKeys.includes(f.node._id) &&
+                "forms__checkbox-button--active"}`}
               onClick={e => {
                 handleFacilitiesArray(f.node);
               }}
@@ -364,7 +364,7 @@ const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
             </div>
           ))}
       </div>
-      <button className="create-establishment__button" type="submit">
+      <button className="establishment-form__button" type="submit">
         <span>Update</span>
       </button>
     </form>

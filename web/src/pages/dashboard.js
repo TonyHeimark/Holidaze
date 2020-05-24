@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { navigate, graphql } from "gatsby";
-import { useSelector, useDispatch } from "react-redux";
-import { setIsLoggedIn } from "../state/loggedIn";
-import { buildImageObj } from "../lib/helpers";
-import { imageUrlFor } from "../lib/image-url";
+import { useSelector } from "react-redux";
 import Layout from "../components/layout";
 import Container from "../components/container";
-import ReadMessage from "../components/bits/readMessage";
-
-import rightArrow from "../assets/sort-down-solid.svg";
-import plusIcon from "../assets/plus-solid.svg";
 import CreateEstablishmentForm from "../components/forms/createEstablishmentForm";
-import EditEstablishmentForm from "../components/forms/editEstablishmentForm";
-import ReadEnquiries from "../components/bits/readEnquiries";
+import Modal from "../components/bits/modal";
+
+import plusIcon from "../assets/plus-solid.svg";
+import Widget from "../components/bits/widget";
+import DashboardListing from "../components/bits/dashboardListing";
 
 export const query = graphql`
   query DashboardQuery {
@@ -102,20 +98,11 @@ const Dashboard = ({ data }) => {
     <Layout>
       <div className="dashboard">
         {modalShow && (
-          <div className="modal">
-            <div className="modal__box">
-              <button
-                className="modal__close-button"
-                onClick={() => {
-                  setModalShow(false);
-                  setModalContentComponent(null);
-                }}
-              >
-                X
-              </button>
-              <div className="modal__content">{modalContentComponent}</div>
-            </div>
-          </div>
+          <Modal
+            modalContentComponent={modalContentComponent}
+            setModalShow={setModalShow}
+            setModalContentComponent={setModalContentComponent}
+          />
         )}
         <Container>
           <div className="dashboard__wrapper">
@@ -125,48 +112,20 @@ const Dashboard = ({ data }) => {
               </h1>
             </div>
             <div className="dashboard__widgets">
-              <div className="widget">
-                <h2 className="widget__title">Messages</h2>
-                <div className="widget__box">
-                  <div className="widget__content">
-                    {messages &&
-                      messages.map(node => (
-                        <button
-                          onClick={() => {
-                            setModalShow(true);
-                            setModalContentComponent(<ReadMessage message={node.node} />);
-                          }}
-                          key={node.node.id}
-                          className="widget__button"
-                        >
-                          {node.node.name}
-                          <img src={rightArrow} alt="message" />{" "}
-                        </button>
-                      ))}
-                  </div>
-                </div>
-              </div>
-              <div className="widget">
-                <h2 className="widget__title">Enquiries</h2>
-                <div className="widget__box">
-                  <div className="widget__content">
-                    {enquiries &&
-                      enquiries.map(node => (
-                        <button
-                          onClick={() => {
-                            setModalShow(true);
-                            setModalContentComponent(<ReadEnquiries enquirie={node.node} />);
-                          }}
-                          key={node.node.id}
-                          className="widget__button"
-                        >
-                          {node.node.name}
-                          <img src={rightArrow} alt="enquirie" />{" "}
-                        </button>
-                      ))}
-                  </div>
-                </div>
-              </div>
+              <Widget
+                items={messages}
+                title="Messages"
+                setModalShow={setModalShow}
+                setModalContentComponent={setModalContentComponent}
+                message={true}
+              />
+              <Widget
+                items={enquiries}
+                title="Enquiries"
+                setModalShow={setModalShow}
+                setModalContentComponent={setModalContentComponent}
+                enquirie={true}
+              />
             </div>
           </div>
           <div className="dashboard__establishments">
@@ -175,37 +134,12 @@ const Dashboard = ({ data }) => {
               <div className="dashboard__listings">
                 {listings &&
                   listings.map(listing => (
-                    <div key={listing.node._id} className="dashboard-listing">
-                      {listing.node && listing.node._rawImage && (
-                        <img
-                          className="dashboard-listing__image"
-                          src={imageUrlFor(buildImageObj(listing.node._rawImage))
-                            .width(400)
-                            .url()}
-                          alt="listing image"
-                        />
-                      )}
-                      <div className="dashboard-listing__content">
-                        <h3 className="dashboard-listing__title">
-                          {listing.node.title.substr(0, 22)}
-                          {listing.node.title.length > 22 && "..."}
-                        </h3>
-                        <button
-                          onClick={e => {
-                            setModalShow(true);
-                            setModalContentComponent(
-                              <EditEstablishmentForm
-                                facilities={facilities}
-                                listingToEdit={listing.node}
-                              />
-                            );
-                          }}
-                          className="dashboard-listing__button"
-                        >
-                          Edit
-                        </button>
-                      </div>
-                    </div>
+                    <DashboardListing
+                      listing={listing}
+                      facilities={facilities}
+                      setModalShow={setModalShow}
+                      setModalContentComponent={setModalContentComponent}
+                    />
                   ))}
               </div>
               <div className="dashboard__listings-buttons">

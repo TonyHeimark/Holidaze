@@ -4,7 +4,6 @@
 @import "./components/header.scss";
 @import "./components/layout.scss";
 @import "./components/container.scss";
-@import "./components/author-list.scss";
 @import "./components/establishment.scss";
 
 @import "./components/bits/filters.scss";
@@ -15,10 +14,14 @@
 @import "./components/bits/initialFilter.scss";
 @import "./components/bits/establishmentListing.scss";
 @import "./components/bits/inputRange.scss";
+@import "./components/bits/widget.scss";
+@import "./components/bits/dashboardListing.scss";
+@import "./components/bits/modal.scss";
 
+@import "./components/forms/forms.scss";
 @import "./components/forms/enquiriesForm.scss";
 @import "./components/forms/signInForm.scss";
-@import "./components/forms/createEstablishmentForm.scss";
+@import "./components/forms/establishmentForm.scss";
 
 @import "./pages/index.scss";
 @import "./pages/browse.scss";

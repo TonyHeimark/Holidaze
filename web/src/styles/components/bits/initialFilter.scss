@@ -10,6 +10,11 @@
   height: auto;
   max-height: 570px;
 
+  @media (max-width: 960px) {
+    padding: 30px 4%;
+    max-width: 100%;
+  }
+
   &__content {
   }
 
@@ -79,6 +84,10 @@
     &:hover {
       background: darken($color-primary-green, 10%);
       transition: 0.3s;
+    }
+
+    @media (max-width: 960px) {
+      margin-bottom: 0;
     }
   }
 }

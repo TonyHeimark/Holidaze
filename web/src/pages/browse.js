@@ -39,6 +39,7 @@ export const query = graphql`
 `;
 
 const Browse = ({ data }) => {
+  const [filterOpen, setFilterOpen] = useState(false);
   const establishments = (data || {}).allSanityEstablishments.edges;
   const filters = useSelector(state => state.filters);
   const [listingsToShow, setListingsToShow] = useState(establishments || []);
@@ -68,8 +69,15 @@ const Browse = ({ data }) => {
       <Container>
         <div className="browse">
           <div className="browse__content">
-            <div className="browse__filters">
-              <Filters />
+            <div className={`browse__filters ${filterOpen && "browse__filters--open"}`}>
+              <span
+                onClick={() => setFilterOpen(!filterOpen)}
+                className={`browse__filters-headline ${filterOpen &&
+                  "browse__filters-headline--open"}`}
+              >
+                {filterOpen ? "Close filters" : "Filters"}
+              </span>
+              <Filters filterOpen={filterOpen} />
             </div>
             <div className="browse__listings">
               {listingsToShow &&

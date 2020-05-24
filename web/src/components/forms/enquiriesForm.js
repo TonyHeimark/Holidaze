@@ -67,14 +67,14 @@ const EnquiriesForm = ({ title, image, availableFrom, availableUntill, price, id
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <div className="create-establishment__top-container">
-        <div className="create-establishment__input-container">
-          <label className="filters__label" htmlFor="name">
+      <div className="establishment-form__top-container">
+        <div className="establishment-form__input-container">
+          <label className="forms__label" htmlFor="name">
             Name
           </label>
 
           <input
-            className="filters__input"
+            className="forms__input"
             type="text"
             value={inputName}
             name="name"
@@ -82,11 +82,11 @@ const EnquiriesForm = ({ title, image, availableFrom, availableUntill, price, id
               setInputName(e.target.value);
             }}
           />
-          <label className="filters__label" htmlFor="email">
+          <label className="forms__label" htmlFor="email">
             Email
           </label>
           <input
-            className="filters__input"
+            className="forms__input"
             type="email"
             value={inputEmail}
             name="email"
@@ -94,11 +94,11 @@ const EnquiriesForm = ({ title, image, availableFrom, availableUntill, price, id
               setInputEmail(e.target.value);
             }}
           />
-          <label className="filters__label" htmlFor="phone">
+          <label className="forms__label" htmlFor="phone">
             Phone
           </label>
           <input
-            className="filters__input"
+            className="forms__input"
             type="phone"
             value={inputPhone}
             name="phone"
@@ -106,10 +106,10 @@ const EnquiriesForm = ({ title, image, availableFrom, availableUntill, price, id
               setInputEmail(e.target.value);
             }}
           />
-          <label className="filters__label" htmlFor="time">
+          <label className="forms__label" htmlFor="time">
             Check-in / Check-out
           </label>
-          <div className="filters__input filters__input--wrapper" type="text" name="time">
+          <div className="forms__input forms__input--wrapper" type="text" name="time">
             <DatePicker
               withPortal
               customInput={<DatepickerInput />}
@@ -131,11 +131,11 @@ const EnquiriesForm = ({ title, image, availableFrom, availableUntill, price, id
             />
           </div>
 
-          <label className="filters__label" htmlFor="guests">
+          <label className="forms__label" htmlFor="guests">
             Guests
           </label>
           <input
-            className="filters__input filters__input--small"
+            className="forms__input forms__input--small"
             placeholder="0"
             type="number"
             value={inputGuests}
@@ -145,9 +145,9 @@ const EnquiriesForm = ({ title, image, availableFrom, availableUntill, price, id
             }}
           />
         </div>
-        <div className="create-establishment__image-container">
-          <div name="currentImage" className="create-establishment__image">
-            <label className="filters__label filters__label--green" htmlFor="currentImage">
+        <div className="establishment-form__image-container">
+          <div name="currentImage" className="establishment-form__image">
+            <label className="forms__label forms__label--green" htmlFor="currentImage">
               {title}
             </label>
             <img

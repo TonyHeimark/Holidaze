@@ -47,7 +47,7 @@ const ContactForm = () => {
       </label>
 
       <input
-        className="filters__input"
+        className="forms__input"
         type="text"
         value={inputName}
         name="name"
@@ -59,7 +59,7 @@ const ContactForm = () => {
         Email
       </label>
       <input
-        className="filters__input"
+        className="forms__input"
         type="email"
         value={inputEmail}
         name="email"
@@ -71,7 +71,7 @@ const ContactForm = () => {
         Message
       </label>
       <textarea
-        className="filters__input filters__textarea"
+        className="forms__input forms__textarea"
         type="textarea"
         value={inputMessage}
         name="message"

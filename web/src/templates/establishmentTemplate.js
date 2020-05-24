@@ -4,6 +4,8 @@ import Establishment from "../components/establishment";
 import SEO from "../components/seo";
 import Layout from "../containers/layout";
 
+import Modal from "../components/bits/modal";
+
 export const query = graphql`
   query EstablishmentTemplateQuery($id: String!) {
     establishment: sanityEstablishments(id: { eq: $id }) {
@@ -46,20 +48,11 @@ const EstablishmentTemplate = ({ data, errors }) => {
         />
       )}
       {modalShow && (
-        <div className="modal">
-          <div className="modal__box">
-            <button
-              className="modal__close-button"
-              onClick={() => {
-                setModalShow(false);
-                setModalContentComponent(null);
-              }}
-            >
-              X
-            </button>
-            <div className="modal__content">{modalContentComponent}</div>
-          </div>
-        </div>
+        <Modal
+          modalContentComponent={modalContentComponent}
+          setModalShow={setModalShow}
+          setModalContentComponent={setModalContentComponent}
+        />
       )}
 
       {establishment && (

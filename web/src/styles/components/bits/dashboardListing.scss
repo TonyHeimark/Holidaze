@@ -1,0 +1,60 @@
+.dashboard-listing {
+  max-width: 360px;
+  width: 100%;
+  min-width: 360px;
+  max-height: 300px;
+  margin-bottom: 40px;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__content {
+    position: absolute;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.49);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 70px;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+
+  &__title {
+    color: white;
+    margin-top: 20px;
+  }
+
+  &__button {
+    box-sizing: content-box;
+    display: block;
+    cursor: pointer;
+    padding: 5px 10px;
+    background: $color-primary-green;
+    border: none;
+    width: 60px;
+    max-width: 100%;
+    border-radius: 13px;
+    height: 30px;
+    transition: 0.3s;
+    color: white;
+    margin-top: 15px;
+    font-size: 16px;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:hover {
+      background: darken($color-primary-green, 10%);
+      transition: 0.3s;
+    }
+  }
+}
