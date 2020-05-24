@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "gatsby";
 import { Location } from "@reach/router";
 import { logout } from "../lib/auth";
@@ -10,7 +10,8 @@ import Icon from "./icon";
 import logo from "../assets/logo.svg";
 import logoDark from "../assets/logo-dark.svg";
 
-const Header = ({ onHideNav, onShowNav, showNav, siteTitle }) => {
+const Header = () => {
+  const [showNav, setShowNav] = useState(false);
   const isLoggedIn = useSelector(state => state.isLoggedIn.isLoggedIn);
   const dispatch = useDispatch();
 
@@ -19,12 +20,17 @@ const Header = ({ onHideNav, onShowNav, showNav, siteTitle }) => {
     logout();
     navigate("/");
   };
+
+  const toggleNav = () => {
+    setShowNav(!showNav);
+  };
+
   return (
     <Location>
       {({ location }) => {
         return (
           <div
-            className={`header ${location && location.pathname === "/" && "header--white"} ${
+            className={`header ${location && location.pathname === "/" ? "header--white" : ""} ${
               showNav ? "header--fixed" : ""
             }`}
           >
@@ -35,7 +41,7 @@ const Header = ({ onHideNav, onShowNav, showNav, siteTitle }) => {
                 </Link>
               </div>
 
-              <button className="header__toggleNavButton" onClick={showNav ? onHideNav : onShowNav}>
+              <button type="button" className="header__toggleNavButton" onClick={toggleNav}>
                 <Icon symbol={location && location.pathname === "/" ? "white" : "dark"} />
               </button>
 
@@ -46,7 +52,7 @@ const Header = ({ onHideNav, onShowNav, showNav, siteTitle }) => {
                     : "header__showNav header__showNav--closed"
                 }`}
               >
-                <span onClick={showNav ? onHideNav : onShowNav} className="header__nav-close">
+                <span onClick={toggleNav} className="header__nav-close">
                   X
                 </span>
                 <ul>

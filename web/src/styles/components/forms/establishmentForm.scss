@@ -2,22 +2,37 @@
   padding-bottom: 60px;
   padding-right: 10px;
   position: relative;
+  @media (max-width: 720px) {
+    padding-right: 0;
+  }
   &__top-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    @media (max-width: 720px) {
+      flex-direction: column;
+    }
   }
 
   &__input-container {
     max-width: 280px;
     width: 100%;
+    @media (max-width: 720px) {
+      max-width: unset;
+    }
   }
 
   &__image-container {
     max-width: 250px;
+    @media (max-width: 720px) {
+      max-width: unset;
+    }
 
     input {
       margin-bottom: 55px;
+      @media (max-width: 720px) {
+        margin-bottom: 20px;
+      }
     }
   }
 
@@ -59,6 +74,9 @@
     &:hover {
       background: darken($color-primary-green, 10%);
       transition: 0.3s;
+    }
+    @media (max-width: 720px) {
+      bottom: -40px;
     }
   }
 }

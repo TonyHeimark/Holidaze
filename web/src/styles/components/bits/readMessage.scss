@@ -47,9 +47,8 @@
       background: darken($color-primary-green, 10%);
       transition: 0.3s;
     }
-
-    @media (max-width: 600px) {
-      right: 0;
+    @media (max-width: 720px) {
+      right: 20px;
     }
   }
 }

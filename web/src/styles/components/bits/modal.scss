@@ -6,7 +6,16 @@
   right: 0;
   background: rgba(255, 255, 255, 0.911);
   z-index: 999;
-  min-height: 200vh;
+  min-height: 2200px;
+  @media (max-width: 1240px) {
+    min-height: 3000px;
+  }
+  @media (max-width: 940px) {
+    min-height: 3500px;
+  }
+  @media (max-width: 720px) {
+    min-height: 4000px;
+  }
 
   &__box {
     min-height: 100px;
@@ -19,12 +28,17 @@
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
     padding: 100px 40px;
     position: relative;
+
+    @media (max-width: 720px) {
+      box-sizing: border-box;
+      padding: 50px 20px 90px;
+    }
   }
 
   &__close-button {
     position: absolute;
-    right: 40px;
-    top: 40px;
+    right: 20px;
+    top: 20px;
     background: none;
     border: none;
     font-size: 30px;

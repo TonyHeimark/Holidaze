@@ -15,13 +15,6 @@ const query = graphql`
 `;
 
 const LayoutContainer = props => {
-  const [showNav, setShowNav] = useState(false);
-  const handleShowNav = () => {
-    setShowNav(true);
-  };
-  const handleHideNav = () => {
-    setShowNav(false);
-  };
   return (
     <StaticQuery
       query={query}
@@ -34,16 +27,7 @@ const LayoutContainer = props => {
         return (
           <Location>
             {({ location }) => {
-              return (
-                <Layout
-                  {...props}
-                  showNav={showNav}
-                  siteTitle={data.site.title}
-                  onHideNav={handleHideNav}
-                  onShowNav={handleShowNav}
-                  location={location}
-                />
-              );
+              return <Layout {...props} siteTitle={data.site.title} location={location} />;
             }}
           </Location>
         );
