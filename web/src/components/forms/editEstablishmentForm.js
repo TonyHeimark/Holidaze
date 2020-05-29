@@ -4,7 +4,7 @@ import DatepickerInput from "../bits/datePickerInput";
 import { buildImageObj } from "../../lib/helpers";
 import { imageUrlFor } from "../../lib/image-url";
 
-const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
+const EditEstablishmentForm = ({ listingToEdit, facilities, setModalShow, handleDelete }) => {
   console.log(listingToEdit);
   const [today, setToday] = useState(new Date());
   const [inputTitle, setInputTitle] = useState(listingToEdit.title);
@@ -52,7 +52,6 @@ const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
       reader.readAsDataURL(file);
       reader.onload = () => {
         // set image and base64'd image data in component state
-
         setDataState(reader.result);
         setFileState(file);
       };
@@ -90,23 +89,24 @@ const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
         }
       }
     ];
-    console.log(mutations);
-    const token =
-      "skj7PZDTY7H7i09HdhE3tmtQNHurEWLABgqvzPA5naMxg62seswXv3eJzat62cCVxvURdjLNPyoeMdm8m0UAaGeHIJmT7rkoVEdKQQN7WRJ0kXwKfD3VkD5bLSurDub519SpQdYWC2ydEM0Ijcnhg56pUPY9dvJCChLLMWlKDq4EhL81X1DE";
 
-    fetch("https://8g6l9b4n.api.sanity.io/v1/data/mutate/production", {
-      method: "post",
+    fetch("https://holidaze.netlify.app/.netlify/functions/createAndMutateData.js", {
+      method: "POST",
       headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${token}`
+        Accept: "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({ mutations })
     })
-      .then(response => response.json())
-      .then(result => {
-        console.log(result);
+      .then(res => res.json())
+      .then(data => {
+        console.log("success response from server...", data);
+        setModalShow(false);
+        // do logic, remove from state
       })
-      .catch(error => console.error(error));
+      .catch(err => {
+        console.log("error ", err);
+      });
   };
 
   const handleUploadAndCreate = () => {
@@ -122,7 +122,7 @@ const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
 
     if (data && file) {
       // fire off request to our upload handler
-      fetch("http://localhost:9000/.netlify/functions/syncEnquiries.js", {
+      fetch("https://holidaze.netlify.app/.netlify/functions/uploadImage.js", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -154,220 +154,230 @@ const EditEstablishmentForm = ({ listingToEdit, facilities }) => {
   };
 
   return (
-    <form onSubmit={handleFormSubmit} className="establishment-form">
-      <div className="establishment-form__top-container">
-        <div className="establishment-form__input-container">
-          <label className="forms__label" htmlFor="title">
-            Title
-          </label>
-          <input
-            className="forms__input"
-            type="text"
-            value={inputTitle}
-            name="title"
-            onChange={e => {
-              setInputTitle(e.target.value);
-            }}
-          />
-
-          <label className="forms__label" htmlFor="type">
-            Type of place
-          </label>
-          <input
-            className="forms__input"
-            type="text"
-            value={inputType}
-            name="type"
-            onChange={e => {
-              setInputType(e.target.value);
-            }}
-          />
-          <label className="forms__label" htmlFor="time">
-            Available from / to
-          </label>
-
-          <div className="forms__input forms__input--wrapper" type="text" name="time">
-            <DatePicker
-              selected={availableFrom}
-              onChange={e => setAvailableFrom(e)}
-              maxDate={availableUntill}
-              minDate={today}
-              withPortal
-              customInput={<DatepickerInput />}
-            />
-
-            <span> | </span>
-
-            <DatePicker
-              selected={availableUntill}
-              onChange={e => setAvailableUntill(e)}
-              minDate={availableFrom}
-              withPortal
-              customInput={<DatepickerInput />}
-            />
-          </div>
-          <label className="forms__label" htmlFor="price">
-            Price per night (NOK)
-          </label>
-          <input
-            className="forms__input"
-            type="number"
-            value={inputPrice}
-            name="price"
-            onChange={e => {
-              setInputPrice(e.target.value);
-            }}
-          />
-        </div>
-        <div className="establishment-form__image-container">
-          <label className="forms__label" htmlFor="file">
-            Upload image
-          </label>
-          <input
-            type="file"
-            name="file"
-            accept="image/jpeg, image/jpg, image/png, image/webp"
-            onChange={handleFileSelect}
-          />
-          <div name="currentImage" className="establishment-form__image">
-            <label className="forms__label" htmlFor="currentImage">
-              Current image
+    <div>
+      <form onSubmit={handleFormSubmit} className="establishment-form">
+        <div className="establishment-form__top-container">
+          <div className="establishment-form__input-container">
+            <label className="forms__label" htmlFor="title">
+              Title
             </label>
-            <img
-              className="dashboard-listing__image"
-              src={imageUrlFor(buildImageObj(listingToEdit._rawImage))
-                .width(400)
-                .url()}
-              alt="current listing image"
+            <input
+              className="forms__input"
+              type="text"
+              value={inputTitle}
+              name="title"
+              onChange={e => {
+                setInputTitle(e.target.value);
+              }}
+            />
+
+            <label className="forms__label" htmlFor="type">
+              Type of place
+            </label>
+            <input
+              className="forms__input"
+              type="text"
+              value={inputType}
+              name="type"
+              onChange={e => {
+                setInputType(e.target.value);
+              }}
+            />
+            <label className="forms__label" htmlFor="time">
+              Available from / to
+            </label>
+
+            <div className="forms__input forms__input--wrapper" type="text" name="time">
+              <DatePicker
+                selected={availableFrom}
+                onChange={e => setAvailableFrom(e)}
+                maxDate={availableUntill}
+                minDate={today}
+                withPortal
+                customInput={<DatepickerInput />}
+              />
+
+              <span> | </span>
+
+              <DatePicker
+                selected={availableUntill}
+                onChange={e => setAvailableUntill(e)}
+                minDate={availableFrom}
+                withPortal
+                customInput={<DatepickerInput />}
+              />
+            </div>
+            <label className="forms__label" htmlFor="price">
+              Price per night (NOK)
+            </label>
+            <input
+              className="forms__input"
+              type="number"
+              value={inputPrice}
+              name="price"
+              onChange={e => {
+                setInputPrice(e.target.value);
+              }}
+            />
+          </div>
+          <div className="establishment-form__image-container">
+            <label className="forms__label" htmlFor="file">
+              Upload image
+            </label>
+            <input
+              type="file"
+              name="file"
+              accept="image/jpeg, image/jpg, image/png, image/webp"
+              onChange={handleFileSelect}
+            />
+            <div name="currentImage" className="establishment-form__image">
+              <label className="forms__label" htmlFor="currentImage">
+                Current image
+              </label>
+              <img
+                className="dashboard-listing__image"
+                src={imageUrlFor(buildImageObj(listingToEdit._rawImage))
+                  .width(400)
+                  .url()}
+                alt="current listing image"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="establishment-form__grid-container">
+          <div className="establishment-form__grid-item">
+            <label className="forms__label" htmlFor="bedrooms">
+              Bedrooms
+            </label>
+            <input
+              className="forms__input forms__input--small"
+              placeholder="0"
+              type="number"
+              value={inputBedrooms}
+              name="bedrooms"
+              onChange={e => {
+                setInputBedrooms(e.target.value);
+              }}
+            />
+          </div>
+
+          <div className="establishment-form__grid-item">
+            <label className="forms__label" htmlFor="beds">
+              Beds
+            </label>
+            <input
+              className="forms__input forms__input--small"
+              placeholder="0"
+              type="number"
+              value={inputBeds}
+              name="beds"
+              onChange={e => {
+                setInputBeds(e.target.value);
+              }}
+            />
+          </div>
+
+          <div className="establishment-form__grid-item">
+            <label className="forms__label" htmlFor="guests">
+              Max guests
+            </label>
+            <input
+              className="forms__input forms__input--small"
+              placeholder="0"
+              type="number"
+              value={inputGuests}
+              name="guests"
+              onChange={e => {
+                setInputGuests(e.target.value);
+              }}
+            />
+          </div>
+          <div className="establishment-form__grid-item">
+            <label className="forms__label" htmlFor="rating">
+              Rating
+            </label>
+            <input
+              className="forms__input forms__input--small"
+              placeholder="0"
+              type="number"
+              value={inputRating}
+              name="rating"
+              onChange={e => {
+                setInputRating(e.target.value);
+              }}
             />
           </div>
         </div>
-      </div>
 
-      <div className="establishment-form__grid-container">
-        <div className="establishment-form__grid-item">
-          <label className="forms__label" htmlFor="bedrooms">
-            Bedrooms
-          </label>
-          <input
-            className="forms__input forms__input--small"
-            placeholder="0"
-            type="number"
-            value={inputBedrooms}
-            name="bedrooms"
-            onChange={e => {
-              setInputBedrooms(e.target.value);
-            }}
-          />
+        <label className="forms__label" htmlFor="latitude">
+          Latitude
+        </label>
+        <input
+          className="forms__input"
+          type="number"
+          value={inputLatitude}
+          name="latitude"
+          onChange={e => {
+            setInputLatitude(e.target.value);
+          }}
+        />
+        <label className="forms__label" htmlFor="longitude">
+          Longitude
+        </label>
+        <input
+          className="forms__input"
+          type="number"
+          value={inputLongitude}
+          name="longitude"
+          onChange={e => {
+            setInputLongitude(e.target.value);
+          }}
+        />
+        <label className="forms__label" htmlFor="description">
+          Description
+        </label>
+        <textarea
+          className="forms__input forms__textarea"
+          type="textarea"
+          value={inputDescription}
+          name="description"
+          onChange={e => {
+            setInputDescription(e.target.value);
+          }}
+        />
+        <label className="forms__label" htmlFor="facilities">
+          Facilities
+        </label>
+        <div className="forms__checkbox" name="facilities">
+          {facilities &&
+            facilities.map(f => (
+              <div
+                tabindex="0"
+                key={f.node._id}
+                className={`forms__checkbox-button ${facilityKeys.includes(f.node._id) &&
+                  "forms__checkbox-button--active"}`}
+                onClick={e => {
+                  handleFacilitiesArray(f.node);
+                }}
+              >
+                {f.node.title}
+              </div>
+            ))}
         </div>
-
-        <div className="establishment-form__grid-item">
-          <label className="forms__label" htmlFor="beds">
-            Beds
-          </label>
-          <input
-            className="forms__input forms__input--small"
-            placeholder="0"
-            type="number"
-            value={inputBeds}
-            name="beds"
-            onChange={e => {
-              setInputBeds(e.target.value);
-            }}
-          />
-        </div>
-
-        <div className="establishment-form__grid-item">
-          <label className="forms__label" htmlFor="guests">
-            Max guests
-          </label>
-          <input
-            className="forms__input forms__input--small"
-            placeholder="0"
-            type="number"
-            value={inputGuests}
-            name="guests"
-            onChange={e => {
-              setInputGuests(e.target.value);
-            }}
-          />
-        </div>
-        <div className="establishment-form__grid-item">
-          <label className="forms__label" htmlFor="rating">
-            Rating
-          </label>
-          <input
-            className="forms__input forms__input--small"
-            placeholder="0"
-            type="number"
-            value={inputRating}
-            name="rating"
-            onChange={e => {
-              setInputRating(e.target.value);
-            }}
-          />
-        </div>
-      </div>
-
-      <label className="forms__label" htmlFor="latitude">
-        Latitude
-      </label>
-      <input
-        className="forms__input"
-        type="number"
-        value={inputLatitude}
-        name="latitude"
-        onChange={e => {
-          setInputLatitude(e.target.value);
-        }}
-      />
-      <label className="forms__label" htmlFor="longitude">
-        Longitude
-      </label>
-      <input
-        className="forms__input"
-        type="number"
-        value={inputLongitude}
-        name="longitude"
-        onChange={e => {
-          setInputLongitude(e.target.value);
-        }}
-      />
-      <label className="forms__label" htmlFor="description">
-        Description
-      </label>
-      <textarea
-        className="forms__input forms__textarea"
-        type="textarea"
-        value={inputDescription}
-        name="description"
-        onChange={e => {
-          setInputDescription(e.target.value);
-        }}
-      />
-      <label className="forms__label" htmlFor="facilities">
-        Facilities
-      </label>
-      <div className="forms__checkbox" name="facilities">
-        {facilities &&
-          facilities.map(f => (
-            <div
-              tabindex="0"
-              key={f.node._id}
-              className={`forms__checkbox-button ${facilityKeys.includes(f.node._id) &&
-                "forms__checkbox-button--active"}`}
-              onClick={e => {
-                handleFacilitiesArray(f.node);
-              }}
-            >
-              {f.node.title}
-            </div>
-          ))}
-      </div>
-      <button className="establishment-form__button" type="submit">
-        <span>Update</span>
-      </button>
-    </form>
+        <button className="establishment-form__button" type="submit">
+          <span>Update</span>
+        </button>
+        <button
+          type="button"
+          onClick={e => {
+            handleDelete(listingToEdit._id);
+          }}
+        >
+          Delete listing
+        </button>
+      </form>
+    </div>
   );
 };
 

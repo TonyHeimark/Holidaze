@@ -53,7 +53,6 @@ exports.handler = (event, context, callback) => {
         filename: name
       })
       .then(imageAsset => {
-        console.log("got imageAsset", imageAsset);
         return resolve({
           statusCode: 200,
           body: JSON.stringify({

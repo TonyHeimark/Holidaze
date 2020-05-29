@@ -21,21 +21,23 @@ const ContactForm = () => {
           }
         }
       ];
-      console.log(mutations);
-      const token =
-        "skj7PZDTY7H7i09HdhE3tmtQNHurEWLABgqvzPA5naMxg62seswXv3eJzat62cCVxvURdjLNPyoeMdm8m0UAaGeHIJmT7rkoVEdKQQN7WRJ0kXwKfD3VkD5bLSurDub519SpQdYWC2ydEM0Ijcnhg56pUPY9dvJCChLLMWlKDq4EhL81X1DE";
 
-      fetch("https://8g6l9b4n.api.sanity.io/v1/data/mutate/production", {
-        method: "post",
+      fetch("https://holidaze.netlify.app/.netlify/functions/createAndMutateData.js", {
+        method: "POST",
         headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${token}`
+          Accept: "application/json",
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({ mutations })
       })
-        .then(response => response.json())
-        .then(result => console.log(result))
-        .catch(error => console.error(error));
+        .then(res => res.json())
+        .then(data => {
+          console.log("success response from server...", data);
+          // do logic, remove from state
+        })
+        .catch(err => {
+          console.log("error ", err);
+        });
     }
     // }
   };

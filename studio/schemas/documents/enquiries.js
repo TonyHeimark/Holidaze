@@ -32,6 +32,11 @@ export default {
       name: "guests",
       type: "string",
       title: "Guests"
+    },
+    {
+      name: "establishmentName",
+      type: "string",
+      title: "For Establishment"
     }
   ]
 };

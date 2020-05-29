@@ -3,7 +3,13 @@ import { buildImageObj } from "../../lib/helpers";
 import { imageUrlFor } from "../../lib/image-url";
 import EditEstablishmentForm from "../forms/editEstablishmentForm";
 
-const DashboardListing = ({ listing, setModalContentComponent, setModalShow, facilities }) => {
+const DashboardListing = ({
+  listing,
+  setModalContentComponent,
+  setModalShow,
+  facilities,
+  handleDelete
+}) => {
   return (
     <div key={listing.node._id} className="dashboard-listing">
       {listing.node && listing.node._rawImage && (
@@ -24,7 +30,12 @@ const DashboardListing = ({ listing, setModalContentComponent, setModalShow, fac
           onClick={e => {
             setModalShow(true);
             setModalContentComponent(
-              <EditEstablishmentForm facilities={facilities} listingToEdit={listing.node} />
+              <EditEstablishmentForm
+                handleDelete={handleDelete}
+                facilities={facilities}
+                listingToEdit={listing.node}
+                setModalShow={setModalShow}
+              />
             );
           }}
           className="dashboard-listing__button"

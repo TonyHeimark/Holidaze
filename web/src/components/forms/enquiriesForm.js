@@ -42,10 +42,13 @@ const EnquiriesForm = ({ title, image, availableFrom, availableUntill, price, id
             phone: inputPhone,
             check_in: checkin,
             check_out: checkout,
-            guests: inputGuests
+            guests: inputGuests,
+            establishmentName: title
           }
         }
       ];
+
+      /*
       console.log(mutations);
       const token =
         "skj7PZDTY7H7i09HdhE3tmtQNHurEWLABgqvzPA5naMxg62seswXv3eJzat62cCVxvURdjLNPyoeMdm8m0UAaGeHIJmT7rkoVEdKQQN7WRJ0kXwKfD3VkD5bLSurDub519SpQdYWC2ydEM0Ijcnhg56pUPY9dvJCChLLMWlKDq4EhL81X1DE";
@@ -61,6 +64,24 @@ const EnquiriesForm = ({ title, image, availableFrom, availableUntill, price, id
         .then(response => response.json())
         .then(result => console.log(result))
         .catch(error => console.error(error));
+        */
+
+      fetch("http://localhost:9000/.netlify/functions/createAndMutateData.js", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ mutations })
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log("success response from server...", data);
+          // go to success modal view
+        })
+        .catch(err => {
+          console.log("error ", err);
+        });
     }
     // }
   };
@@ -103,7 +124,7 @@ const EnquiriesForm = ({ title, image, availableFrom, availableUntill, price, id
             value={inputPhone}
             name="phone"
             onChange={e => {
-              setInputEmail(e.target.value);
+              setInputPhone(e.target.value);
             }}
           />
           <label className="forms__label" htmlFor="time">
@@ -115,8 +136,8 @@ const EnquiriesForm = ({ title, image, availableFrom, availableUntill, price, id
               customInput={<DatepickerInput />}
               selected={checkin}
               onChange={e => setCheckin(e)}
-              minDate={availableFromDate}
-              maxDate={checkout || availableUntillDate}
+              minDate={availableFromDate || null}
+              maxDate={checkout || availableUntillDate || null}
             />
 
             <span> | </span>
@@ -126,8 +147,8 @@ const EnquiriesForm = ({ title, image, availableFrom, availableUntill, price, id
               withPortal
               selected={checkout}
               onChange={e => setCheckout(e)}
-              minDate={checkin || availableFromDate}
-              maxDate={availableUntillDate}
+              minDate={checkin || availableFromDate || null}
+              maxDate={availableUntillDate || null}
             />
           </div>
 

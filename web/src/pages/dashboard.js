@@ -24,6 +24,7 @@ export const query = graphql`
       edges {
         node {
           id
+          _id
           email
           _key
           message
@@ -36,12 +37,14 @@ export const query = graphql`
         node {
           _key
           id
+          _id
           name
           email
           phone
           guests
           check_in
           check_out
+          establishmentName
         }
       }
     }
@@ -94,6 +97,35 @@ const Dashboard = ({ data }) => {
     }
   }, [isLoggedIn, modalShow]);
 
+  const handleDelete = itemId => {
+    const mutations = [
+      {
+        delete: {
+          id: itemId
+        }
+      }
+    ];
+    fetch("https://holidaze.netlify.app/.netlify/functions/createAndMutateData.js", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ mutations })
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log("success response from server...", data);
+        if (data.success) {
+          setModalShow(false);
+          // do logic, remove from state
+        }
+      })
+      .catch(err => {
+        console.log("error ", err);
+      });
+  };
+
   return (
     <Layout>
       <div className="dashboard">
@@ -113,6 +145,7 @@ const Dashboard = ({ data }) => {
             </div>
             <div className="dashboard__widgets">
               <Widget
+                handleDelete={handleDelete}
                 items={messages}
                 title="Messages"
                 setModalShow={setModalShow}
@@ -120,6 +153,7 @@ const Dashboard = ({ data }) => {
                 message={true}
               />
               <Widget
+                handleDelete={handleDelete}
                 items={enquiries}
                 title="Enquiries"
                 setModalShow={setModalShow}
@@ -139,6 +173,7 @@ const Dashboard = ({ data }) => {
                       facilities={facilities}
                       setModalShow={setModalShow}
                       setModalContentComponent={setModalContentComponent}
+                      handleDelete={handleDelete}
                     />
                   ))}
               </div>

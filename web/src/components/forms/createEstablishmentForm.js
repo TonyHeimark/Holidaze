@@ -84,24 +84,24 @@ const CreateEstablishmentForm = ({ setModalShow, facilities }) => {
         }
       }
     ];
-    console.log(mutations);
-    const token =
-      "skj7PZDTY7H7i09HdhE3tmtQNHurEWLABgqvzPA5naMxg62seswXv3eJzat62cCVxvURdjLNPyoeMdm8m0UAaGeHIJmT7rkoVEdKQQN7WRJ0kXwKfD3VkD5bLSurDub519SpQdYWC2ydEM0Ijcnhg56pUPY9dvJCChLLMWlKDq4EhL81X1DE";
 
-    fetch("https://8g6l9b4n.api.sanity.io/v1/data/mutate/production", {
-      method: "post",
+    fetch("http://localhost:9000/.netlify/functions/createAndMutateData.js", {
+      method: "POST",
       headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${token}`
+        Accept: "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({ mutations })
     })
-      .then(response => response.json())
-      .then(result => {
-        console.log(result);
+      .then(res => res.json())
+      .then(data => {
+        console.log("success response from server...", data);
         setModalShow(false);
+        // do logic, remove from state
       })
-      .catch(error => console.error(error));
+      .catch(err => {
+        console.log("error ", err);
+      });
   };
 
   const handleUploadAndCreate = () => {
@@ -117,7 +117,7 @@ const CreateEstablishmentForm = ({ setModalShow, facilities }) => {
 
     if (data && file) {
       // fire off request to our upload handler
-      fetch("http://localhost:9000/.netlify/functions/syncEnquiries.js", {
+      fetch("https://holidaze.netlify.app/.netlify/functions/uploadImage.js", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -192,7 +192,7 @@ const CreateEstablishmentForm = ({ setModalShow, facilities }) => {
             <DatePicker
               selected={availableUntill}
               onChange={e => setAvailableUntill(e)}
-              minDate={setAvailableFrom}
+              minDate={availableFrom}
               withPortal
               customInput={<DatepickerInput />}
             />
