@@ -9,7 +9,7 @@ const retHeaders = {
   "Content-Type": "application/json"
 };
 
-const allowedOrigins = ["http://localhost:8000"];
+const allowedOrigins = ["http://localhost:8000", "https://holidaze.netlify.app"];
 
 exports.handler = (event, context, callback) => {
   const promise = new Promise(async (resolve, reject) => {
