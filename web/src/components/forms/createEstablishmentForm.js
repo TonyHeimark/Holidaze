@@ -85,7 +85,7 @@ const CreateEstablishmentForm = ({ setModalShow, facilities }) => {
       }
     ];
 
-    fetch("http://localhost:9000/.netlify/functions/createAndMutateData.js", {
+    fetch("http://localhost:9000/.netlify/functions/createAndMutateData", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -117,7 +117,7 @@ const CreateEstablishmentForm = ({ setModalShow, facilities }) => {
 
     if (data && file) {
       // fire off request to our upload handler
-      fetch("https://holidaze.netlify.app/.netlify/functions/uploadImage.js", {
+      fetch("https://holidaze.netlify.app/.netlify/functions/uploadImage", {
         method: "POST",
         headers: {
           Accept: "application/json",

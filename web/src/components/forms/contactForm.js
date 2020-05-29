@@ -22,7 +22,7 @@ const ContactForm = () => {
         }
       ];
 
-      fetch("https://holidaze.netlify.app/.netlify/functions/createAndMutateData.js", {
+      fetch("https://holidaze.netlify.app/.netlify/functions/createAndMutateData", {
         method: "POST",
         headers: {
           Accept: "application/json",

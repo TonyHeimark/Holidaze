@@ -66,7 +66,7 @@ const EnquiriesForm = ({ title, image, availableFrom, availableUntill, price, id
         .catch(error => console.error(error));
         */
 
-      fetch("http://localhost:9000/.netlify/functions/createAndMutateData.js", {
+      fetch("http://localhost:9000/.netlify/functions/createAndMutateData", {
         method: "POST",
         headers: {
           Accept: "application/json",
