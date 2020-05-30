@@ -78,7 +78,7 @@ export const query = graphql`
 `;
 
 const Dashboard = ({ data }) => {
-  const enquiries = (data || {}).enquiries.edges;
+  let enquiries = (data || {}).enquiries.edges;
   const messages = (data || {}).messages.edges;
   const listings = (data || {}).listings.edges;
   const facilities = (data || {}).facilities.edges;
@@ -95,6 +95,23 @@ const Dashboard = ({ data }) => {
     if (typeof window !== "undefined" && modalShow) {
       window.scroll(0, 0);
     }
+    const query = `*[_type == "enquiries"]`;
+    fetch("https://holidaze.netlify.app/.netlify/functions/fetchDirectlyFromAPI.js", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(query)
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log("success response from server...", data);
+        enquiries = data.data;
+      })
+      .catch(err => {
+        console.log("error ", err);
+      });
   }, [isLoggedIn, modalShow]);
 
   const handleDelete = itemId => {
