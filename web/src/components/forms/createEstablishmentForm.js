@@ -85,7 +85,7 @@ const CreateEstablishmentForm = ({ setModalShow, facilities }) => {
       }
     ];
 
-    fetch("http://localhost:9000/.netlify/functions/createAndMutateData", {
+    fetch("https://holidaze.netlify.app/.netlify/functions/createAndMutateData", {
       method: "POST",
       headers: {
         Accept: "application/json",
