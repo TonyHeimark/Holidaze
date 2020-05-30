@@ -8,14 +8,18 @@ const DashboardListing = ({
   setModalContentComponent,
   setModalShow,
   facilities,
-  handleDelete
+  handleDelete,
+  fetchDynamicData,
+  setStateChange,
+  setEstablishments,
+  stateChange
 }) => {
   return (
-    <div key={listing.node._id} className="dashboard-listing">
-      {listing.node && listing.node._rawImage && (
+    <div key={listing._id} className="dashboard-listing">
+      {listing && listing.image && (
         <img
           className="dashboard-listing__image"
-          src={imageUrlFor(buildImageObj(listing.node._rawImage))
+          src={imageUrlFor(buildImageObj(listing.image))
             .width(400)
             .url()}
           alt="listing image"
@@ -23,8 +27,8 @@ const DashboardListing = ({
       )}
       <div className="dashboard-listing__content">
         <h3 className="dashboard-listing__title">
-          {listing.node.title.substr(0, 22)}
-          {listing.node.title.length > 22 && "..."}
+          {listing.title.substr(0, 22)}
+          {listing.title.length > 22 && "..."}
         </h3>
         <button
           onClick={e => {
@@ -33,8 +37,12 @@ const DashboardListing = ({
               <EditEstablishmentForm
                 handleDelete={handleDelete}
                 facilities={facilities}
-                listingToEdit={listing.node}
+                listingToEdit={listing}
                 setModalShow={setModalShow}
+                fetchDynamicData={fetchDynamicData}
+                setStateChange={setStateChange}
+                setEstablishments={setEstablishments}
+                stateChange={stateChange}
               />
             );
           }}

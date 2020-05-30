@@ -7,6 +7,8 @@ import SignInForm from "../components/forms/signInForm";
 
 import logo from "../assets/logo-dark.svg";
 
+import "../styles/layout.scss";
+
 const SignInPage = () => {
   const isLoggedIn = useSelector(state => state.isLoggedIn.isLoggedIn);
   const dispatch = useDispatch();

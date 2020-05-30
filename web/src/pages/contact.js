@@ -4,6 +4,8 @@ import SEO from "../components/seo";
 import ContactForm from "../components/forms/contactForm.js";
 import Container from "../components/container";
 
+import "../styles/layout.scss";
+
 const Contact = () => (
   <Layout>
     <SEO title="Contact" />

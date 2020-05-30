@@ -26,25 +26,25 @@ const Widget = ({
                   setModalContentComponent(
                     message ? (
                       <ReadMessage
-                        message={node.node}
+                        message={node}
                         setModalShow={setModalShow}
                         handleDelete={handleDelete}
                       />
                     ) : enquirie ? (
                       <ReadEnquiries
-                        enquirie={node.node}
+                        enquirie={node}
                         setModalShow={setModalShow}
                         handleDelete={handleDelete}
                       />
                     ) : null
                   );
                 }}
-                key={node.node.id}
+                key={node._id}
                 className="widget__button"
               >
-                {(node.node.establishmentName || node.node.name).substr(0, 16)}
-                {node.node.establishmentName && node.node.establishmentName.length > 16 && "..."}
-                {node.node.name && node.node.name.length > 16 && "..."}
+                {(node.establishmentName || node.name).substr(0, 16)}
+                {node.establishmentName && node.establishmentName.length > 16 && "..."}
+                {node.name && node.name.length > 16 && "..."}
                 <img src={rightArrow} alt="message" />{" "}
               </button>
             ))}

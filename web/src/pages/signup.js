@@ -6,6 +6,8 @@ import SignUpForm from "../components/forms/signUpForm";
 
 import logo from "../assets/logo-dark.svg";
 
+import "../styles/layout.scss";
+
 const SignUpPage = () => {
   const isLoggedIn = useSelector(state => state.isLoggedIn.isLoggedIn);
   const [userName, setUserName] = useState("");

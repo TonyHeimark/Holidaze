@@ -2,7 +2,14 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import DatepickerInput from "../bits/datePickerInput";
 
-const CreateEstablishmentForm = ({ setModalShow, facilities }) => {
+const CreateEstablishmentForm = ({
+  setModalShow,
+  facilities,
+  setEstablishments,
+  fetchDynamicData,
+  setStateChange,
+  stateChange
+}) => {
   const [today, setToday] = useState(new Date());
   const [inputTitle, setInputTitle] = useState("");
   const [inputType, setInputType] = useState("");
@@ -97,7 +104,9 @@ const CreateEstablishmentForm = ({ setModalShow, facilities }) => {
       .then(data => {
         console.log("success response from server...", data);
         setModalShow(false);
-        // do logic, remove from state
+        const query = `*[_type == "establishments"]`;
+        fetchDynamicData(query, setEstablishments);
+        setStateChange(!stateChange);
       })
       .catch(err => {
         console.log("error ", err);
@@ -331,7 +340,7 @@ const CreateEstablishmentForm = ({ setModalShow, facilities }) => {
         {facilities &&
           facilities.map(f => (
             <div
-              tabindex="0"
+              tabIndex="0"
               key={f.node._id}
               className={`forms__checkbox-button ${facilityKeys.includes(f.node._id) &&
                 "forms__checkbox-button--active"}`}

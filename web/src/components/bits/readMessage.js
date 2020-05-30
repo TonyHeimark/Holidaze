@@ -26,7 +26,7 @@ const ReadMessage = ({ message, handleDelete }) => {
       <button
         type="button"
         onClick={e => {
-          handleDelete(message._id);
+          handleDelete(message._id, "message");
         }}
       >
         Delete message

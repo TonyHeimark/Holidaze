@@ -10,6 +10,8 @@ import plusIcon from "../assets/plus-solid.svg";
 import Widget from "../components/bits/widget";
 import DashboardListing from "../components/bits/dashboardListing";
 
+import "../styles/layout.scss";
+
 export const query = graphql`
   query DashboardQuery {
     facilities: allSanityFacilities {
@@ -78,25 +80,17 @@ export const query = graphql`
 `;
 
 const Dashboard = ({ data }) => {
-  let enquiries = (data || {}).enquiries.edges;
-  const messages = (data || {}).messages.edges;
-  const listings = (data || {}).listings.edges;
+  const [stateChange, setStateChange] = useState(false);
+  const [establishments, setEstablishments] = useState(null);
+  const [messages, setMessages] = useState(null);
+  const [enquiries, setEnquiries] = useState(null);
+  const [modalShow, setModalShow] = useState(false);
+  const [modalContentComponent, setModalContentComponent] = useState(null);
   const facilities = (data || {}).facilities.edges;
   const isLoggedIn = useSelector(state => state.isLoggedIn.isLoggedIn);
 
-  const [modalShow, setModalShow] = useState(false);
-
-  const [modalContentComponent, setModalContentComponent] = useState(null);
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate("/signin/");
-    }
-    if (typeof window !== "undefined" && modalShow) {
-      window.scroll(0, 0);
-    }
-    const query = `*[_type == "enquiries"]`;
-    fetch("https://holidaze.netlify.app/.netlify/functions/fetchDirectlyFromAPI.js", {
+  const fetchDynamicData = (query, stateToUpdate) => {
+    fetch("https://holidaze.netlify.app/.netlify/functions/fetchDirectlyFromAPI", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -107,14 +101,39 @@ const Dashboard = ({ data }) => {
       .then(res => res.json())
       .then(data => {
         console.log("success response from server..", data);
-        enquiries = data.data;
+        stateToUpdate(data.data);
       })
       .catch(err => {
         console.log("error ", err);
       });
-  }, [isLoggedIn, modalShow]);
+  };
 
-  const handleDelete = itemId => {
+  useEffect(() => {
+    //navigate to signin page if you're not logged in
+    if (!isLoggedIn) {
+      navigate("/signin/");
+    }
+    //scroll to top when modal opens
+    if (typeof window !== "undefined" && modalShow) {
+      window.scroll(0, 0);
+    }
+    //Fetching initial data for dashboard, this fetches on render.
+    if (enquiries === null) {
+      const query = `*[_type == "enquiries"]`;
+      fetchDynamicData(query, setEnquiries);
+    }
+    if (messages === null) {
+      const query = `*[_type == "contact"]`;
+      fetchDynamicData(query, setMessages);
+    }
+    if (establishments === null) {
+      const query = `*[_type == "establishments"]`;
+      fetchDynamicData(query, setEstablishments);
+    }
+  }, [isLoggedIn, modalShow, stateChange]);
+
+  // handles delete and updates state to show the admin that the item is deleted.
+  const handleDelete = (itemId, type) => {
     const mutations = [
       {
         delete: {
@@ -135,6 +154,46 @@ const Dashboard = ({ data }) => {
         console.log("success response from server...", data);
         if (data.success) {
           setModalShow(false);
+
+          if (type === "enquirie") {
+            const dataState = enquiries;
+            const index = dataState
+              .map(item => {
+                return item._id;
+              })
+              .indexOf(itemId);
+            if (index > -1) {
+              dataState.splice(index, 1);
+            }
+            setEnquiries(dataState);
+          }
+
+          if (type === "message") {
+            const dataState = messages;
+            const index = dataState
+              .map(item => {
+                return item._id;
+              })
+              .indexOf(itemId);
+            if (index > -1) {
+              dataState.splice(index, 1);
+            }
+            setMessages(dataState);
+          }
+
+          if (type === "establishment") {
+            const dataState = establishments;
+            const index = dataState
+              .map(item => {
+                return item._id;
+              })
+              .indexOf(itemId);
+            if (index > -1) {
+              dataState.splice(index, 1);
+            }
+            setEstablishments(dataState);
+          }
+          setStateChange(!stateChange);
           // do logic, remove from state
         }
       })
@@ -169,6 +228,7 @@ const Dashboard = ({ data }) => {
                 setModalContentComponent={setModalContentComponent}
                 message={true}
               />
+
               <Widget
                 handleDelete={handleDelete}
                 items={enquiries}
@@ -183,14 +243,19 @@ const Dashboard = ({ data }) => {
             <h2 className="widget__title">Listings</h2>
             <div className="dashboard__listings-box">
               <div className="dashboard__listings">
-                {listings &&
-                  listings.map(listing => (
+                {establishments &&
+                  establishments.map(listing => (
                     <DashboardListing
                       listing={listing}
                       facilities={facilities}
                       setModalShow={setModalShow}
                       setModalContentComponent={setModalContentComponent}
                       handleDelete={handleDelete}
+                      key={listing._id}
+                      fetchDynamicData={fetchDynamicData}
+                      setStateChange={setStateChange}
+                      setEstablishments={setEstablishments}
+                      stateChange={stateChange}
                     />
                   ))}
               </div>
@@ -202,6 +267,10 @@ const Dashboard = ({ data }) => {
                       <CreateEstablishmentForm
                         facilities={facilities}
                         setModalShow={setModalShow}
+                        fetchDynamicData={fetchDynamicData}
+                        setStateChange={setStateChange}
+                        setEstablishments={setEstablishments}
+                        stateChange={stateChange}
                       />
                     );
                   }}

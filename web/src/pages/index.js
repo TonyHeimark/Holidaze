@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { graphql } from "gatsby";
 import Container from "../components/container";
 import SEO from "../components/seo";
 import Layout from "../containers/layout";
-import ContactForm from "../components/forms/contactForm";
-import EnquiriesForm from "../components/forms/enquiriesForm";
-import CreateEstablishmentForm from "../components/forms/createEstablishmentForm";
 import InitialFilter from "../components/bits/initialFilter";
+
+import "../styles/layout.scss";
 
 export const query = graphql`
   fragment SanityImage on SanityMainImage {

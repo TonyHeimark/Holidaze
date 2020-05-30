@@ -4,8 +4,16 @@ import DatepickerInput from "../bits/datePickerInput";
 import { buildImageObj } from "../../lib/helpers";
 import { imageUrlFor } from "../../lib/image-url";
 
-const EditEstablishmentForm = ({ listingToEdit, facilities, setModalShow, handleDelete }) => {
-  console.log(listingToEdit);
+const EditEstablishmentForm = ({
+  listingToEdit,
+  facilities,
+  setModalShow,
+  handleDelete,
+  setEstablishments,
+  fetchDynamicData,
+  setStateChange,
+  stateChange
+}) => {
   const [today, setToday] = useState(new Date());
   const [inputTitle, setInputTitle] = useState(listingToEdit.title);
   const [inputType, setInputType] = useState(listingToEdit.typeOfEstablishment);
@@ -18,7 +26,7 @@ const EditEstablishmentForm = ({ listingToEdit, facilities, setModalShow, handle
   const [inputLatitude, setInputLatitude] = useState(listingToEdit.latitude);
   const [inputLongitude, setInputLongitude] = useState(listingToEdit.longitude);
   const [inputRating, setInputRating] = useState(listingToEdit.rating);
-  const [inputImage, setInputImage] = useState(listingToEdit._rawImage.asset._ref);
+  const [inputImage, setInputImage] = useState(listingToEdit.image.asset._ref);
   const [inputFacilities, setInputFacilities] = useState(listingToEdit.facilities);
   const [facilityKeys, setFacilityKeys] = useState(listingToEdit.facilities.map(f => f._key));
   const [inputDescription, setInputDescription] = useState(listingToEdit.description);
@@ -58,7 +66,7 @@ const EditEstablishmentForm = ({ listingToEdit, facilities, setModalShow, handle
     }
   };
 
-  const handleCreateEstablishment = image => {
+  const handleEditEstablishment = image => {
     const mutations = [
       {
         patch: {
@@ -102,14 +110,16 @@ const EditEstablishmentForm = ({ listingToEdit, facilities, setModalShow, handle
       .then(data => {
         console.log("success response from server...", data);
         setModalShow(false);
-        // do logic, remove from state
+        const query = `*[_type == "establishments"]`;
+        fetchDynamicData(query, setEstablishments);
+        setStateChange(!stateChange);
       })
       .catch(err => {
         console.log("error ", err);
       });
   };
 
-  const handleUploadAndCreate = () => {
+  const handleUploadAndEdit = () => {
     const data = dataState;
     const file = fileState;
 
@@ -121,7 +131,6 @@ const EditEstablishmentForm = ({ listingToEdit, facilities, setModalShow, handle
     };
 
     if (data && file) {
-      // fire off request to our upload handler
       fetch("https://holidaze.netlify.app/.netlify/functions/uploadImage", {
         method: "POST",
         headers: {
@@ -134,7 +143,7 @@ const EditEstablishmentForm = ({ listingToEdit, facilities, setModalShow, handle
         .then(imageResult => {
           console.log("success response from server...", imageResult);
           setInputImage(imageResult.data);
-          handleCreateEstablishment(imageResult.data);
+          handleEditEstablishment(imageResult.data);
         })
         .catch(err => {
           console.log("error ", err);
@@ -143,13 +152,11 @@ const EditEstablishmentForm = ({ listingToEdit, facilities, setModalShow, handle
   };
 
   const handleFormSubmit = event => {
-    // const { isFormValid } = this.state;
     event.preventDefault();
-    // add validation
     if (fileState !== "") {
-      handleUploadAndCreate();
+      handleUploadAndEdit();
     } else {
-      handleCreateEstablishment(inputImage);
+      handleEditEstablishment(inputImage);
     }
   };
 
@@ -236,7 +243,7 @@ const EditEstablishmentForm = ({ listingToEdit, facilities, setModalShow, handle
               </label>
               <img
                 className="dashboard-listing__image"
-                src={imageUrlFor(buildImageObj(listingToEdit._rawImage))
+                src={imageUrlFor(buildImageObj(listingToEdit.image))
                   .width(400)
                   .url()}
                 alt="current listing image"
@@ -353,7 +360,7 @@ const EditEstablishmentForm = ({ listingToEdit, facilities, setModalShow, handle
           {facilities &&
             facilities.map(f => (
               <div
-                tabindex="0"
+                tabIndex="0"
                 key={f.node._id}
                 className={`forms__checkbox-button ${facilityKeys.includes(f.node._id) &&
                   "forms__checkbox-button--active"}`}
@@ -371,7 +378,7 @@ const EditEstablishmentForm = ({ listingToEdit, facilities, setModalShow, handle
         <button
           type="button"
           onClick={e => {
-            handleDelete(listingToEdit._id);
+            handleDelete(listingToEdit._id, "establishment");
           }}
         >
           Delete listing

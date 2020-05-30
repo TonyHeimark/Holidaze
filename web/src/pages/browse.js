@@ -7,6 +7,8 @@ import Layout from "../containers/layout";
 import Filters from "../components/bits/filters";
 import EstablishmentListing from "../components/bits/establishmentListing";
 
+import "../styles/layout.scss";
+
 export const query = graphql`
   query BrowsePageQuery {
     allSanityEstablishments {

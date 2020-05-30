@@ -44,7 +44,7 @@ const ReadEnquiries = ({ enquirie, handleDelete }) => {
       <button
         type="button"
         onClick={e => {
-          handleDelete(enquirie._id);
+          handleDelete(enquirie._id, "enquirie");
         }}
       >
         Delete enquirie
