@@ -106,7 +106,7 @@ const Dashboard = ({ data }) => {
     })
       .then(res => res.json())
       .then(data => {
-        console.log("success response from server...", data);
+        console.log("success response from server..", data);
         enquiries = data.data;
       })
       .catch(err => {
