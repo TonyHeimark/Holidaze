@@ -99,7 +99,7 @@ const Establishment = ({
             <div className="establishment-page__facilities">
               {facilities &&
                 facilities.map(f => (
-                  <span key={f._id}>
+                  <span key={f._id + Math.random()}>
                     &#8226;<span>{f.title}</span>
                   </span>
                 ))}

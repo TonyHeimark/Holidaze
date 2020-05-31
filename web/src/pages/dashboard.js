@@ -83,7 +83,8 @@ const Dashboard = ({ data }) => {
     const mutations = [
       {
         delete: {
-          id: itemId
+          id: itemId,
+          type: type
         }
       }
     ];
@@ -128,6 +129,9 @@ const Dashboard = ({ data }) => {
           }
 
           if (type === "establishment") {
+            //  fetch("https://api.netlify.com/build_hooks/5ed39b97766834cac6c1dfec", {
+            //    method: "post"
+            //  });
             const dataState = establishments;
             const index = dataState
               .map(item => {

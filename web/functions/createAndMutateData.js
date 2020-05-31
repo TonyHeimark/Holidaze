@@ -41,9 +41,22 @@ exports.handler = (event, context, callback) => {
         headers: retHeaders
       });
     }
-
     const mutations = postBody.mutations;
 
+    //checking if the change is to an establishment, and triggers a rebuild of the netlify site.
+    const isEstablishment =
+      (mutations[0].create && mutations[0].create._type) ||
+      (mutations[0].patch && mutations[0].patch.set._type) ||
+      (mutations[0].delete && mutations[0].delete.type) ||
+      "";
+
+    if (isEstablishment === "establishments" || isEstablishment === "establishment") {
+      fetch("https://api.netlify.com/build_hooks/5ed39b97766834cac6c1dfec", {
+        method: "post"
+      });
+    }
+
+    //sending the data to the sanity api
     fetch("https://8g6l9b4n.api.sanity.io/v1/data/mutate/production", {
       method: "post",
       headers: {
