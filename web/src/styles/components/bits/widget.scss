@@ -16,6 +16,12 @@
     color: $color-dark-green;
   }
 
+  &__info {
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 10px;
+  }
+
   &__box {
     background: #fff;
     border: none;

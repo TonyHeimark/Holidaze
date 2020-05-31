@@ -4,86 +4,116 @@ import DatepickerInput from "../bits/datePickerInput";
 import { buildImageObj } from "../../lib/helpers";
 import { imageUrlFor } from "../../lib/image-url";
 import { useSelector } from "react-redux";
+import ThankYouModal from "../bits/thankYouModal";
 
-const EnquiriesForm = ({ title, image, availableFrom, availableUntill, price, id, maxGuests }) => {
+const EnquiriesForm = ({
+  title,
+  image,
+  availableFrom,
+  availableUntill,
+  price,
+  id,
+  maxGuests,
+  setModalContentComponent
+}) => {
   const filters = useSelector(state => state.filters);
-  const [inputName, setInputName] = useState("");
-  const [inputEmail, setInputEmail] = useState("");
-  const [inputPhone, setInputPhone] = useState("");
-  const [checkin, setCheckin] = useState(filters.checkin || null);
-  const [checkout, setCheckout] = useState(filters.checkout || null);
-  const [inputGuests, setInputGuests] = useState(filters.guests || 1);
   const [totalPrice, setTotalPrice] = useState(null);
   const [availableFromDate, setAvailableFromDate] = useState(new Date(availableFrom));
   const [availableUntillDate, setAvailableUntillDate] = useState(new Date(availableUntill));
+  const [errorState, setErrorState] = useState({});
+  const [formFields, setFormFields] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    checkin: filters.checkin || null,
+    checkout: filters.checkout || null,
+    guests: filters.guests || 1
+  });
+
+  const handleFormFields = e => {
+    const field = e.target.name;
+    const value = e.target.value;
+    let errors = errorState;
+    delete errors[field];
+
+    setFormFields({ ...formFields, [field]: value });
+    setErrorState(errors);
+  };
 
   useEffect(() => {
-    if (checkin && checkout) {
-      const timeDifference = checkin.getTime() - checkout.getTime();
+    if (formFields.checkin && formFields.checkout) {
+      const timeDifference = formFields.checkin.getTime() - formFields.checkout.getTime();
       const dayDifference = timeDifference / (1000 * 3600 * 24);
       setTotalPrice(Math.abs(price * dayDifference));
     } else {
       setTotalPrice(null);
     }
-  }, [checkin, checkout, price]);
+  }, [formFields.checkin, formFields.checkout, price]);
 
   const handleFormSubmit = event => {
-    // const { isFormValid } = this.state;
     event.preventDefault();
-    // add validation
 
-    if (true) {
-      const mutations = [
-        {
-          create: {
-            _type: "enquiries",
-            name: inputName,
-            email: inputEmail,
-            phone: inputPhone,
-            check_in: checkin,
-            check_out: checkout,
-            guests: inputGuests,
-            establishmentName: title
-          }
-        }
-      ];
+    let errors = {};
+    const emailVal = RegExp("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$");
+    const phoneVal = RegExp("^[0-9]{8}$");
 
-      /*
-      console.log(mutations);
-      const token =
-        "skj7PZDTY7H7i09HdhE3tmtQNHurEWLABgqvzPA5naMxg62seswXv3eJzat62cCVxvURdjLNPyoeMdm8m0UAaGeHIJmT7rkoVEdKQQN7WRJ0kXwKfD3VkD5bLSurDub519SpQdYWC2ydEM0Ijcnhg56pUPY9dvJCChLLMWlKDq4EhL81X1DE";
-
-      fetch("https://8g6l9b4n.api.sanity.io/v1/data/mutate/production", {
-        method: "post",
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ mutations })
-      })
-        .then(response => response.json())
-        .then(result => console.log(result))
-        .catch(error => console.error(error));
-        */
-
-      fetch("https://holidaze.netlify.app/.netlify/functions/createAndMutateData", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ mutations })
-      })
-        .then(res => res.json())
-        .then(data => {
-          console.log("success response from server...", data);
-          // go to success modal view
-        })
-        .catch(err => {
-          console.log("error ", err);
-        });
+    if (formFields.name === "") {
+      errors = { ...errors, name: "You need to fill out this field" };
     }
-    // }
+    if (!emailVal.test(formFields.email) || formFields.email === "") {
+      errors = { ...errors, email: "Please put in a valid email" };
+    }
+    if (!phoneVal.test(formFields.phone) || formFields.phone === null) {
+      errors = { ...errors, phone: "Please put in a valid phone number" };
+    }
+    if (formFields.guests === "" || formFields.guests === 0 || formFields.guests === "0") {
+      errors = { ...errors, guests: "Can't be zero" };
+    }
+    if (formFields.guests > maxGuests) {
+      errors = { ...errors, guests: `Max ${maxGuests} guests.` };
+    }
+    if (formFields.checkin === null || formFields.checkout === null) {
+      errors = { ...errors, date: "You need to pick a date" };
+    }
+
+    const errorCheck = Object.keys(errors);
+    if (errorCheck.length !== 0) {
+      setErrorState(errors);
+      console.log(errors);
+      return null;
+    }
+
+    const mutations = [
+      {
+        create: {
+          _type: "enquiries",
+          name: formFields.name,
+          email: formFields.email,
+          phone: formFields.phone,
+          check_in: formFields.checkin,
+          check_out: formFields.checkout,
+          guests: formFields.guests,
+          establishmentName: title
+        }
+      }
+    ];
+
+    fetch("https://holidaze.netlify.app/.netlify/functions/createAndMutateData", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ mutations })
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log("success response from server...", data);
+        setModalContentComponent(<ThankYouModal />);
+      })
+      .catch(err => {
+        console.log("error ", err);
+      });
   };
 
   return (
@@ -92,52 +122,55 @@ const EnquiriesForm = ({ title, image, availableFrom, availableUntill, price, id
         <div className="establishment-form__input-container">
           <label className="forms__label" htmlFor="name">
             Name
+            {errorState.name && <span>{errorState.name}</span>}
           </label>
 
           <input
             className="forms__input"
             type="text"
-            value={inputName}
+            value={formFields.name}
             name="name"
-            onChange={e => {
-              setInputName(e.target.value);
-            }}
+            onChange={handleFormFields}
           />
           <label className="forms__label" htmlFor="email">
             Email
+            {errorState.email && <span>{errorState.email}</span>}
           </label>
           <input
             className="forms__input"
             type="email"
-            value={inputEmail}
+            value={formFields.email}
             name="email"
-            onChange={e => {
-              setInputEmail(e.target.value);
-            }}
+            onChange={handleFormFields}
           />
           <label className="forms__label" htmlFor="phone">
             Phone
+            {errorState.phone && <span>{errorState.phone}</span>}
           </label>
           <input
             className="forms__input"
             type="phone"
-            value={inputPhone}
+            value={formFields.phone}
             name="phone"
-            onChange={e => {
-              setInputPhone(e.target.value);
-            }}
+            onChange={handleFormFields}
           />
           <label className="forms__label" htmlFor="time">
             Check-in / Check-out
+            {errorState.date && <span>{errorState.date}</span>}
           </label>
           <div className="forms__input forms__input--wrapper" type="text" name="time">
             <DatePicker
               withPortal
               customInput={<DatepickerInput />}
-              selected={checkin}
-              onChange={e => setCheckin(e)}
+              selected={formFields.checkin}
+              onChange={e => {
+                setFormFields({ ...formFields, checkin: e });
+                let errors = errorState;
+                delete errors.date;
+                setErrorState(errors);
+              }}
               minDate={availableFromDate || null}
-              maxDate={checkout || availableUntillDate || null}
+              maxDate={formFields.checkout || availableUntillDate || null}
             />
 
             <span> | </span>
@@ -145,25 +178,29 @@ const EnquiriesForm = ({ title, image, availableFrom, availableUntill, price, id
             <DatePicker
               customInput={<DatepickerInput />}
               withPortal
-              selected={checkout}
-              onChange={e => setCheckout(e)}
-              minDate={checkin || availableFromDate || null}
+              selected={formFields.checkout}
+              onChange={e => {
+                setFormFields({ ...formFields, checkout: e });
+                let errors = errorState;
+                delete errors.date;
+                setErrorState(errors);
+              }}
+              minDate={formFields.checkin || availableFromDate || null}
               maxDate={availableUntillDate || null}
             />
           </div>
 
           <label className="forms__label" htmlFor="guests">
             Guests
+            {errorState.guests && <span>{errorState.guests}</span>}
           </label>
           <input
             className="forms__input forms__input--small"
             placeholder="0"
             type="number"
-            value={inputGuests}
+            value={formFields.guests}
             name="guests"
-            onChange={e => {
-              setInputGuests(e.target.value);
-            }}
+            onChange={handleFormFields}
           />
         </div>
         <div className="establishment-form__image-container">

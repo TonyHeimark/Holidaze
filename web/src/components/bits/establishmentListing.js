@@ -9,10 +9,7 @@ import BedIcon from "../../assets/bed-solid.svg";
 const EstablishmentListing = ({ listing }) => {
   return (
     <div className="establishment-listing">
-      <Link
-        className="establishment-listing__content"
-        to={`browse/${listing.title}/${listing.id}/`}
-      >
+      <Link className="establishment-listing__content" to={`/browse/${listing._id}/`}>
         <div className="establishment-listing__image-container">
           {listing && listing._rawImage && (
             <img

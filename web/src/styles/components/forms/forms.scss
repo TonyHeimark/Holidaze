@@ -5,6 +5,13 @@
     &--green {
       color: $color-dark-green;
     }
+
+    span {
+      display: block;
+      font-size: 0.7rem;
+      margin-top: 10px;
+      color: rgba(199, 4, 4, 0.787);
+    }
   }
 
   &__input {
@@ -42,6 +49,10 @@
         position: absolute;
         left: 50%;
       }
+    }
+
+    &--error {
+      box-shadow: 0 5px 10px rgba(180, 19, 4, 0.144);
     }
   }
 

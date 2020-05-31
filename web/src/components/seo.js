@@ -4,6 +4,7 @@ import Helmet from "react-helmet";
 import { StaticQuery, graphql } from "gatsby";
 import { imageUrlFor } from "../lib/image-url";
 import { buildImageObj } from "../lib/helpers";
+import favicon from "./icon/favicon.ico";
 
 const SEO = ({ description, lang, meta, keywords, title, image }) => {
   return (
@@ -25,6 +26,7 @@ const SEO = ({ description, lang, meta, keywords, title, image }) => {
             htmlAttributes={{ lang }}
             title={title}
             titleTemplate={title === siteTitle ? "%s" : `%s | ${siteTitle}`}
+            link={[{ rel: "icon", type: "image/png", sizes: "16x16", href: `${favicon}` }]}
             meta={[
               {
                 name: "description",

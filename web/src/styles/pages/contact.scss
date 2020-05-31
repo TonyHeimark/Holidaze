@@ -4,6 +4,14 @@
   padding: 0 40px 100px;
   margin: 0 auto;
 
+  &__success {
+    color: $color-primary-green;
+    font-size: 1.6rem;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 30px;
+  }
+
   @media (max-width: 600px) {
     padding: 0 0 100px;
   }

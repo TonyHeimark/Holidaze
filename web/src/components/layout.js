@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "./header";
+import Footer from "./footer";
 
 const Layout = ({ children, onHideNav, onShowNav, showNav, siteTitle, location }) => (
   <>
@@ -11,6 +12,7 @@ const Layout = ({ children, onHideNav, onShowNav, showNav, siteTitle, location }
       showNav={showNav}
     />
     <div className="content">{children}</div>
+    <Footer />
   </>
 );
 

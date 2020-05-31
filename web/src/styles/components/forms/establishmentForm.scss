@@ -50,6 +50,19 @@
     }
   }
 
+  &__delete-button {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    border: none;
+    color: rgb(179, 2, 2);
+    background: none;
+    cursor: pointer;
+    @media (max-width: 720px) {
+      bottom: -40px;
+    }
+  }
+
   &__button {
     bottom: 0px;
     right: 20px;

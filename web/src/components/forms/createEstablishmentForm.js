@@ -11,26 +11,39 @@ const CreateEstablishmentForm = ({
   stateChange
 }) => {
   const [today, setToday] = useState(new Date());
-  const [inputTitle, setInputTitle] = useState("");
-  const [inputType, setInputType] = useState("");
-  const [inputPrice, setInputPrice] = useState("");
-  const [inputBedrooms, setInputBedrooms] = useState("");
-  const [inputBeds, setInputBeds] = useState("");
-  const [inputGuests, setInputGuests] = useState("");
-  const [inputLatitude, setInputLatitude] = useState("");
-  const [availableFrom, setAvailableFrom] = useState(new Date());
-  const [availableUntill, setAvailableUntill] = useState(null);
-  const [inputLongitude, setInputLongitude] = useState("");
-  const [inputRating, setInputRating] = useState("");
-  const [inputImage, setInputImage] = useState(null);
-  const [inputFacilities, setInputFacilities] = useState([]);
   const [facilityKeys, setFacilityKeys] = useState([]);
-  const [inputDescription, setInputDescription] = useState("");
   const [fileState, setFileState] = useState("");
   const [dataState, setDataState] = useState("");
+  const [errorState, setErrorState] = useState({});
+  const [formFields, setFormFields] = useState({
+    title: "",
+    type: "",
+    price: "",
+    bedrooms: "",
+    beds: "",
+    guests: "",
+    latitude: "",
+    longitude: "",
+    availableFrom: new Date(),
+    availableUntill: null,
+    rating: "",
+    image: null,
+    facilities: [],
+    description: ""
+  });
+
+  const handleFormFields = e => {
+    const field = e.target.name;
+    const value = e.target.value;
+    let errors = errorState;
+    delete errors[field];
+
+    setFormFields({ ...formFields, [field]: value });
+    setErrorState(errors);
+  };
 
   const handleFacilitiesArray = facility => {
-    const facilitiesInState = inputFacilities;
+    const facilitiesInState = formFields.facilities;
     const index = facilitiesInState
       .map(item => {
         return item._ref;
@@ -46,7 +59,7 @@ const CreateEstablishmentForm = ({
       });
     }
     setFacilityKeys(facilitiesInState.map(f => f._key));
-    setInputFacilities(facilitiesInState);
+    setFormFields({ ...formFields, facilities: facilitiesInState });
   };
 
   const handleFileSelect = e => {
@@ -59,6 +72,10 @@ const CreateEstablishmentForm = ({
 
         setDataState(reader.result);
         setFileState(file);
+        setFormFields({ ...formFields, image: file.name });
+        let errors = errorState;
+        delete errors.image;
+        setErrorState(errors);
       };
     }
   };
@@ -68,26 +85,25 @@ const CreateEstablishmentForm = ({
       {
         create: {
           _type: "establishments",
-          title: inputTitle,
+          title: formFields.title,
           image: {
             _type: "image",
             asset: {
               _ref: image._id
             }
           },
-          description: inputDescription,
-          typeOfEstablishment: inputType,
-          availableFrom: availableFrom,
-          availableUntill: availableUntill,
-          price: inputPrice,
-          bedrooms: inputBedrooms,
-          beds: inputBeds,
-          maxGuests: inputGuests,
-          beds: inputBeds,
-          latitude: inputLatitude,
-          longitude: inputLongitude,
-          rating: inputRating,
-          facilities: inputFacilities
+          description: formFields.description,
+          typeOfEstablishment: formFields.type,
+          availableFrom: formFields.availableFrom,
+          availableUntill: formFields.availableUntill,
+          price: formFields.price,
+          bedrooms: formFields.bedrooms,
+          beds: formFields.beds,
+          maxGuests: formFields.guests,
+          latitude: formFields.latitude,
+          longitude: formFields.longitude,
+          rating: formFields.rating,
+          facilities: formFields.facilities
         }
       }
     ];
@@ -137,7 +153,6 @@ const CreateEstablishmentForm = ({
         .then(res => res.json())
         .then(imageResult => {
           console.log("success response from server...", imageResult);
-          setInputImage(imageResult.data);
           handleCreateEstablishment(imageResult.data);
         })
         .catch(err => {
@@ -147,9 +162,45 @@ const CreateEstablishmentForm = ({
   };
 
   const handleFormSubmit = event => {
-    // const { isFormValid } = this.state;
     event.preventDefault();
-    // add validation
+
+    let errors = {};
+
+    if (formFields.title === "") {
+      errors = { ...errors, title: "You need to fill out this field" };
+    }
+    if (formFields.type === "") {
+      errors = { ...errors, type: "You need to fill out this field" };
+    }
+    if (formFields.price === "") {
+      errors = { ...errors, price: "You need to fill out this field" };
+    }
+    if (formFields.bedrooms === "" || formFields.bedrooms === 0 || formFields.bedrooms === "0") {
+      errors = { ...errors, bedrooms: "Can't be zero" };
+    }
+    if (formFields.beds === "" || formFields.beds === 0 || formFields.beds === "0") {
+      errors = { ...errors, beds: "Can't be zero" };
+    }
+    if (formFields.guests === "" || formFields.guests === 0 || formFields.guests === "0") {
+      errors = { ...errors, guests: "Can't be zero" };
+    }
+    if (formFields.availableUntill === null) {
+      errors = { ...errors, availableUntill: "You need to pick a date" };
+    }
+    if (formFields.image === null) {
+      errors = { ...errors, image: "You need to upload an image" };
+    }
+    if (formFields.description === "") {
+      errors = { ...errors, description: "You need to fill out this field" };
+    }
+
+    const errorCheck = Object.keys(errors);
+    if (errorCheck.length !== 0) {
+      setErrorState(errors);
+      console.log(errors);
+      return null;
+    }
+
     handleUploadAndCreate();
   };
 
@@ -159,38 +210,44 @@ const CreateEstablishmentForm = ({
         <div className="establishment-form__input-container">
           <label className="forms__label" htmlFor="title">
             Title
+            {errorState.title && <span>{errorState.title}</span>}
           </label>
           <input
-            className="forms__input"
+            className={`forms__input ${errorState.title && "forms__input--error"}`}
             type="text"
-            value={inputTitle}
+            value={formFields.title}
             name="title"
-            onChange={e => {
-              setInputTitle(e.target.value);
-            }}
+            onChange={handleFormFields}
           />
 
           <label className="forms__label" htmlFor="type">
             Type of place
+            {errorState.type && <span>{errorState.type}</span>}
           </label>
           <input
-            className="forms__input"
+            className={`forms__input ${errorState.type && "forms__input--error"}`}
             type="text"
-            value={inputType}
+            value={formFields.type}
             name="type"
-            onChange={e => {
-              setInputType(e.target.value);
-            }}
+            onChange={handleFormFields}
           />
           <label className="forms__label" htmlFor="time">
-            Check-in / Check-out
+            Available from / to
+            {errorState.availableUntill && <span>{errorState.availableUntill}</span>}
           </label>
 
-          <div className="forms__input forms__input--wrapper" type="text" name="time">
+          <div
+            className={`forms__input forms__input--wrapper ${errorState.availableUntill &&
+              "forms__input--error"}`}
+            type="text"
+            name="time"
+          >
             <DatePicker
-              selected={availableFrom}
-              onChange={e => setAvailableFrom(e)}
-              maxDate={availableUntill}
+              selected={formFields.availableFrom}
+              onChange={e => {
+                setFormFields({ ...formFields, availableFrom: e });
+              }}
+              maxDate={formFields.availableUntill}
               minDate={today}
               withPortal
               customInput={<DatepickerInput />}
@@ -199,29 +256,34 @@ const CreateEstablishmentForm = ({
             <span> | </span>
 
             <DatePicker
-              selected={availableUntill}
-              onChange={e => setAvailableUntill(e)}
-              minDate={availableFrom}
+              selected={formFields.availableUntill}
+              onChange={e => {
+                setFormFields({ ...formFields, availableUntill: e });
+                let errors = errorState;
+                delete errors.availableUntill;
+                setErrorState(errors);
+              }}
+              minDate={formFields.availableFrom}
               withPortal
               customInput={<DatepickerInput />}
             />
           </div>
           <label className="forms__label" htmlFor="price">
             Price per night (NOK)
+            {errorState.price && <span>{errorState.price}</span>}
           </label>
           <input
-            className="forms__input"
+            className={`forms__input ${errorState.price && "forms__input--error"}`}
             type="number"
-            value={inputPrice}
+            value={formFields.price}
             name="price"
-            onChange={e => {
-              setInputPrice(e.target.value);
-            }}
+            onChange={handleFormFields}
           />
         </div>
         <div className="establishment-form__image-container">
           <label className="forms__label" htmlFor="file">
             Upload image
+            {errorState.image && <span>{errorState.image}</span>}
           </label>
           <input
             type="file"
@@ -236,102 +298,100 @@ const CreateEstablishmentForm = ({
         <div className="establishment-form__grid-item">
           <label className="forms__label" htmlFor="bedrooms">
             Bedrooms
+            {errorState.bedrooms && <span>{errorState.bedrooms}</span>}
           </label>
           <input
-            className="forms__input forms__input--small"
+            className={`forms__input forms__input--small ${errorState.bedrooms &&
+              "forms__input--error"}`}
             placeholder="0"
             type="number"
-            value={inputBedrooms}
+            value={formFields.bedrooms}
             name="bedrooms"
-            onChange={e => {
-              setInputBedrooms(e.target.value);
-            }}
+            onChange={handleFormFields}
           />
         </div>
 
         <div className="establishment-form__grid-item">
           <label className="forms__label" htmlFor="beds">
             Beds
+            {errorState.beds && <span>{errorState.beds}</span>}
           </label>
           <input
-            className="forms__input forms__input--small"
+            className={`forms__input forms__input--small ${errorState.beds &&
+              "forms__input--error"}`}
             placeholder="0"
             type="number"
-            value={inputBeds}
+            value={formFields.beds}
             name="beds"
-            onChange={e => {
-              setInputBeds(e.target.value);
-            }}
+            onChange={handleFormFields}
           />
         </div>
 
         <div className="establishment-form__grid-item">
           <label className="forms__label" htmlFor="guests">
             Max guests
+            {errorState.guests && <span>{errorState.guests}</span>}
           </label>
           <input
-            className="forms__input forms__input--small"
+            className={`forms__input forms__input--small ${errorState.guests &&
+              "forms__input--error"}`}
             placeholder="0"
             type="number"
-            value={inputGuests}
+            value={formFields.guests}
             name="guests"
-            onChange={e => {
-              setInputGuests(e.target.value);
-            }}
+            onChange={handleFormFields}
           />
         </div>
         <div className="establishment-form__grid-item">
           <label className="forms__label" htmlFor="rating">
             Rating
+            {errorState.rating && <span>{errorState.rating}</span>}
           </label>
           <input
-            className="forms__input forms__input--small"
+            className={`forms__input forms__input--small ${errorState.rating &&
+              "forms__input--error"}`}
             placeholder="0"
             type="number"
-            value={inputRating}
+            value={formFields.rating}
             name="rating"
-            onChange={e => {
-              setInputRating(e.target.value);
-            }}
+            onChange={handleFormFields}
           />
         </div>
       </div>
 
       <label className="forms__label" htmlFor="latitude">
         Latitude
+        {errorState.latitude && <span>{errorState.latitude}</span>}
       </label>
       <input
-        className="forms__input"
+        className={`forms__input ${errorState.latitude && "forms__input--error"}`}
         type="number"
-        value={inputLatitude}
+        value={formFields.latitude}
         name="latitude"
-        onChange={e => {
-          setInputLatitude(e.target.value);
-        }}
+        onChange={handleFormFields}
       />
       <label className="forms__label" htmlFor="longitude">
         Longitude
+        {errorState.longitude && <span>{errorState.longitude}</span>}
       </label>
       <input
-        className="forms__input"
+        className={`forms__input ${errorState.longitude && "forms__input--error"}`}
         type="number"
-        value={inputLongitude}
+        value={formFields.longitude}
         name="longitude"
-        onChange={e => {
-          setInputLongitude(e.target.value);
-        }}
+        onChange={handleFormFields}
       />
       <label className="forms__label" htmlFor="description">
         Description
+        {errorState.description && <span>{errorState.description}</span>}
       </label>
       <textarea
-        className="forms__input forms__textarea"
+        className={`forms__input forms__textarea ${errorState.description &&
+          "forms__input--error"}`}
         type="textarea"
-        value={inputDescription}
+        value={formFields.description}
         name="description"
-        onChange={e => {
-          setInputDescription(e.target.value);
-        }}
+        onChange={handleFormFields}
       />
       <label className="forms__label" htmlFor="facilities">
         Facilities

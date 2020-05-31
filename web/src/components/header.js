@@ -58,15 +58,42 @@ const Header = () => {
                 <ul>
                   {isLoggedIn && (
                     <li>
-                      <Link to="/dashboard/">Dashboard</Link>
+                      <Link
+                        className={`header__link ${
+                          location && location.pathname.includes("/dashboard/")
+                            ? "header__link--active"
+                            : ""
+                        }`}
+                        to="/dashboard/"
+                      >
+                        Dashboard
+                      </Link>
                     </li>
                   )}
                   <li>
-                    <Link to="/browse/">Browse</Link>
+                    <Link
+                      className={`header__link ${
+                        location && location.pathname.includes("/browse/")
+                          ? "header__link--active"
+                          : ""
+                      }`}
+                      to="/browse/"
+                    >
+                      Browse
+                    </Link>
                   </li>
                   {!isLoggedIn && (
                     <li>
-                      <Link to="/contact/">Contact</Link>
+                      <Link
+                        className={`header__link ${
+                          location && location.pathname.includes("/contact/")
+                            ? "header__link--active"
+                            : ""
+                        }`}
+                        to="/contact/"
+                      >
+                        Contact
+                      </Link>
                     </li>
                   )}
                   <li>

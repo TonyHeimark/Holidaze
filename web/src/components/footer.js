@@ -2,8 +2,11 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div>
-      <div></div>
+    <div className="footer">
+      <div className="footer__copyright-container">
+        <span className="footer__copyright">Copyright &copy; 2020 Holidaze.</span>
+        <span> Design and development by Tony Heimark</span>
+      </div>
     </div>
   );
 };

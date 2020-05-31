@@ -27,6 +27,19 @@
     }
   }
 
+  &__delete-button {
+    position: absolute;
+    left: 40px;
+    bottom: 40px;
+    border: none;
+    color: rgb(179, 2, 2);
+    background: none;
+    cursor: pointer;
+    @media (max-width: 720px) {
+      left: 20px;
+    }
+  }
+
   &__button {
     position: absolute;
     right: 40px;

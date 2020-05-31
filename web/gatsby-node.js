@@ -12,8 +12,8 @@ const createEstablishmentPages = async (graphql, actions, reporter) => {
       allSanityEstablishments {
         edges {
           node {
+            _id
             id
-            title
           }
         }
       }
@@ -25,9 +25,8 @@ const createEstablishmentPages = async (graphql, actions, reporter) => {
   const edges = (result.data.allSanityEstablishments || {}).edges || [];
 
   edges.forEach((edge, index) => {
-    const { id, title } = edge.node;
-    const slug = `${title}/${id}`;
-    const path = `/browse/${slug}/`;
+    const { id, _id } = edge.node;
+    const path = `/browse/${_id}/`;
 
     reporter.info(`Creating establishment page: ${path}`);
 

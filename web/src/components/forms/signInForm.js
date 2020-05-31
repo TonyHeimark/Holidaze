@@ -13,11 +13,11 @@ const SignInForm = ({
       {authenticated === false && (
         <span className="signin-form__error">Your username or password is incorrect.</span>
       )}
-      <label for="username" className="signin-form__label">
+      <label for="username" className="forms__label">
         Username
       </label>
       <input
-        className="signin-form__input"
+        className="forms__input"
         name="username"
         type="text"
         value={userName}
@@ -25,11 +25,11 @@ const SignInForm = ({
           setUserName(e.target.value);
         }}
       />
-      <label for="username" className="signin-form__label">
+      <label for="username" className="forms__label">
         Password
       </label>
       <input
-        className="signin-form__input"
+        className="forms__input"
         name="password"
         type="password"
         value={password}

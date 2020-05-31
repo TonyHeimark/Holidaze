@@ -24,12 +24,13 @@ const ReadMessage = ({ message, handleDelete }) => {
         {message.message}
       </div>
       <button
+        className="read-message__delete-button"
         type="button"
         onClick={e => {
           handleDelete(message._id, "message");
         }}
       >
-        Delete message
+        X Delete message
       </button>
 
       <a className="read-message__button" href={`mailto:${message.email}`}>

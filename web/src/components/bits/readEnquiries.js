@@ -42,12 +42,13 @@ const ReadEnquiries = ({ enquirie, handleDelete }) => {
         {enquirie.guests}
       </div>
       <button
+        className="read-message__delete-button"
         type="button"
         onClick={e => {
           handleDelete(enquirie._id, "enquirie");
         }}
       >
-        Delete enquirie
+        X Delete enquirie
       </button>
       <a className="read-message__button" href={`mailto:${enquirie.email}`}>
         <span>Reply</span>

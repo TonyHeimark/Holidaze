@@ -5,6 +5,7 @@
 @import "./components/layout.scss";
 @import "./components/container.scss";
 @import "./components/establishment.scss";
+@import "./components/footer.scss";
 
 @import "./components/bits/filters.scss";
 @import "./components/bits/readMessage.scss";
@@ -17,6 +18,7 @@
 @import "./components/bits/widget.scss";
 @import "./components/bits/dashboardListing.scss";
 @import "./components/bits/modal.scss";
+@import "./components/bits/thankYouModal.scss";
 
 @import "./components/forms/forms.scss";
 @import "./components/forms/enquiriesForm.scss";
@@ -58,6 +60,7 @@ a {
 button {
   font-family: $font-family-sans;
   font-weight: bold;
+  outline: none;
 }
 
 label {

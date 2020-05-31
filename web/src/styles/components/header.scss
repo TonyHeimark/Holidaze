@@ -118,6 +118,9 @@
         transition: 0.2s;
       }
     }
+    .header__link--active {
+      border-bottom: 2px solid $color-dark-green !important;
+    }
     @include media-max-medium {
       position: absolute;
       background: $color-white;

@@ -1,0 +1,11 @@
+.footer {
+  border: 0;
+  &__copyright-container {
+    text-align: center;
+    margin: 0 auto;
+    padding: 50px 4%;
+    span {
+      display: block;
+    }
+  }
+}

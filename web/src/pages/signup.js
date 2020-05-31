@@ -10,26 +10,55 @@ import "../styles/layout.scss";
 
 const SignUpPage = () => {
   const isLoggedIn = useSelector(state => state.isLoggedIn.isLoggedIn);
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorState, setErrorState] = useState({});
+  const [formFields, setFormFields] = useState({
+    username: "",
+    password: "",
+    confirm: ""
+  });
+
+  const handleFormFields = e => {
+    const field = e.target.name;
+    const value = e.target.value;
+    let errors = errorState;
+    delete errors[field];
+
+    setFormFields({ ...formFields, [field]: value });
+    setErrorState(errors);
+  };
 
   const handleSignUp = () => {
-    if (userName.length >= 3 && password.length >= 6 && password === confirmPassword) {
-      const usersLogin = {
-        users: [
-          {
-            username: userName,
-            password
-          }
-        ]
-      };
-      setUser(usersLogin.users);
-      localStorage.setItem("users", JSON.stringify(usersLogin.users));
-      navigate("/signin/");
-    } else {
+    let errors = {};
+
+    if (formFields.username.length < 6) {
+      errors = { ...errors, username: "Username needs to be 6 characters or more" };
+    }
+    if (formFields.password.length < 6) {
+      errors = { ...errors, password: "Password needs to be 6 characters or more" };
+    }
+
+    if (formFields.confirm !== formFields.password) {
+      errors = { ...errors, confirm: "Password does not match" };
+    }
+
+    const errorCheck = Object.keys(errors);
+    if (errorCheck.length !== 0) {
+      setErrorState(errors);
+      console.log(errors);
       return null;
     }
+
+    const usersLogin = {
+      users: [
+        {
+          username: formFields.username,
+          password: formFields.password
+        }
+      ]
+    };
+    setUser(usersLogin.users);
+    localStorage.setItem("users", JSON.stringify(usersLogin.users));
+    navigate("/signin/");
   };
 
   useEffect(() => {
@@ -46,9 +75,8 @@ const SignUpPage = () => {
         </Link>
         <SignUpForm
           handleSignUp={handleSignUp}
-          setConfirmPassword={setConfirmPassword}
-          setPassword={setPassword}
-          setUserName={setUserName}
+          handleFormFields={handleFormFields}
+          errorState={errorState}
         />
         <div className="sign-up__link-box">
           <Link className="sign-up__link" to="/signin">

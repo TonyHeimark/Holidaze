@@ -22,60 +22,6 @@ export const query = graphql`
         }
       }
     }
-    messages: allSanityContact {
-      edges {
-        node {
-          id
-          _id
-          email
-          _key
-          message
-          name
-        }
-      }
-    }
-    enquiries: allSanityEnquiries {
-      edges {
-        node {
-          _key
-          id
-          _id
-          name
-          email
-          phone
-          guests
-          check_in
-          check_out
-          establishmentName
-        }
-      }
-    }
-    listings: allSanityEstablishments {
-      edges {
-        node {
-          title
-          price
-          rating
-          longitude
-          latitude
-          bedrooms
-          beds
-          description
-          availableFrom
-          availableUntill
-          facilities {
-            _ref: _id
-            _key: _id
-            _type
-          }
-          _id
-          id
-          typeOfEstablishment
-          maxGuests
-          _rawImage
-        }
-      }
-    }
   }
 `;
 
@@ -240,7 +186,11 @@ const Dashboard = ({ data }) => {
             </div>
           </div>
           <div className="dashboard__establishments">
-            <h2 className="widget__title">Listings</h2>
+            <h2 className="widget__title">Listings </h2>
+            <span className="widget__info">
+              (all creations and edits of listings will be displayed for users on the browse page
+              after a redeploy. aprox 2 minutes.)
+            </span>
             <div className="dashboard__listings-box">
               <div className="dashboard__listings">
                 {establishments &&

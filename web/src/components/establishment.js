@@ -71,6 +71,7 @@ const Establishment = ({
                         image={_rawImage}
                         availableFrom={availableFrom}
                         availableUntill={availableUntill}
+                        setModalContentComponent={setModalContentComponent}
                         price={price}
                         maxGuests={maxGuests}
                       />
@@ -98,7 +99,7 @@ const Establishment = ({
             <div className="establishment-page__facilities">
               {facilities &&
                 facilities.map(f => (
-                  <span>
+                  <span key={f._id}>
                     &#8226;<span>{f.title}</span>
                   </span>
                 ))}
@@ -108,7 +109,7 @@ const Establishment = ({
           </div>
           <div className="establishment-page__column">
             <h3 className="establishment-page__headline">Location</h3>
-            <div class="establishment-page__map">
+            <div className="establishment-page__map">
               <iframe
                 frameBorder="0"
                 src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDR_sCmVQlRXojO3S5UP4LtzsRzEciT_sE&q=${latitude},${longitude}&zoom=12`}

@@ -376,12 +376,13 @@ const EditEstablishmentForm = ({
           <span>Update</span>
         </button>
         <button
+          className="establishment-form__delete-button"
           type="button"
           onClick={e => {
             handleDelete(listingToEdit._id, "establishment");
           }}
         >
-          Delete listing
+          X Delete listing
         </button>
       </form>
     </div>
