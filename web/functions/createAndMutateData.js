@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+const fetch = require("node-fetch");
 
 const token =
   "skj7PZDTY7H7i09HdhE3tmtQNHurEWLABgqvzPA5naMxg62seswXv3eJzat62cCVxvURdjLNPyoeMdm8m0UAaGeHIJmT7rkoVEdKQQN7WRJ0kXwKfD3VkD5bLSurDub519SpQdYWC2ydEM0Ijcnhg56pUPY9dvJCChLLMWlKDq4EhL81X1DE";
@@ -61,6 +61,7 @@ exports.handler = (event, context, callback) => {
     if (mutations.length > 1) {
       mutations.pop();
     }
+    console.log(mutations);
 
     //sending the data to the sanity api
     fetch("https://8g6l9b4n.api.sanity.io/v1/data/mutate/production", {
