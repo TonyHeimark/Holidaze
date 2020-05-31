@@ -90,7 +90,7 @@ const Dashboard = ({ data }) => {
         type
       }
     ];
-    fetch("http://localhost:9000/.netlify/functions/createAndMutateData.js", {
+    fetch("https://holidaze.netlify.app/.netlify/functions/createAndMutateData", {
       method: "POST",
       headers: {
         Accept: "application/json",
