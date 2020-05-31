@@ -49,8 +49,10 @@ exports.handler = (event, context, callback) => {
     const isEstablishment =
       (mutations[0].create && mutations[0].create._type) ||
       (mutations[0].patch && mutations[0].patch.set._type) ||
-      (mutations.length > 1 && mutations[1] && mutations[1].type) ||
+      (mutations.length > 1 && mutations[1].type) ||
       "";
+
+    console.log(isEstablishment);
 
     if (isEstablishment === "establishments" || isEstablishment === "establishment") {
       fetch("https://api.netlify.com/build_hooks/5ed39b97766834cac6c1dfec", {
