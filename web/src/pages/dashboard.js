@@ -83,12 +83,14 @@ const Dashboard = ({ data }) => {
     const mutations = [
       {
         delete: {
-          id: itemId,
-          type: type
+          id: itemId
         }
+      },
+      {
+        type
       }
     ];
-    fetch("https://holidaze.netlify.app/.netlify/functions/createAndMutateData", {
+    fetch("https://holidaze.netlify.app/.netlify/functions/createAndMutateData.js", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -129,9 +131,6 @@ const Dashboard = ({ data }) => {
           }
 
           if (type === "establishment") {
-            //  fetch("https://api.netlify.com/build_hooks/5ed39b97766834cac6c1dfec", {
-            //    method: "post"
-            //  });
             const dataState = establishments;
             const index = dataState
               .map(item => {
@@ -193,7 +192,7 @@ const Dashboard = ({ data }) => {
             <h2 className="widget__title">Listings </h2>
             <span className="widget__info">
               (all creations and edits of listings will be displayed for users on the browse page
-              after a redeploy. aprox 2 minutes.)
+              after a redeploy. aprox 1 minute.)
             </span>
             <div className="dashboard__listings-box">
               <div className="dashboard__listings">
