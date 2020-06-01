@@ -46,7 +46,6 @@ const Dashboard = ({ data }) => {
     })
       .then(res => res.json())
       .then(data => {
-        console.log("success response from server..", data);
         stateToUpdate(data.data);
       })
       .catch(err => {
@@ -100,7 +99,6 @@ const Dashboard = ({ data }) => {
     })
       .then(res => res.json())
       .then(data => {
-        console.log("success response from server...", data);
         if (data.success) {
           setModalShow(false);
 

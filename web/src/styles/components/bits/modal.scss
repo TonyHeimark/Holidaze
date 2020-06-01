@@ -43,9 +43,9 @@
     border: none;
     font-size: 30px;
     cursor: pointer;
-    color: #393939;
+    color: $color-dark-gray;
     &:hover {
-      color: black;
+      color: $color-black;
     }
 
     &:focus {

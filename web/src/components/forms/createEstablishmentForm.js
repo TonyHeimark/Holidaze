@@ -118,7 +118,6 @@ const CreateEstablishmentForm = ({
     })
       .then(res => res.json())
       .then(data => {
-        console.log("success response from server...", data);
         setModalShow(false);
         const query = `*[_type == "establishments"]`;
         fetchDynamicData(query, setEstablishments);
@@ -152,7 +151,6 @@ const CreateEstablishmentForm = ({
       })
         .then(res => res.json())
         .then(imageResult => {
-          console.log("success response from server...", imageResult);
           handleCreateEstablishment(imageResult.data);
         })
         .catch(err => {
@@ -197,7 +195,7 @@ const CreateEstablishmentForm = ({
     const errorCheck = Object.keys(errors);
     if (errorCheck.length !== 0) {
       setErrorState(errors);
-      console.log(errors);
+
       return null;
     }
 
@@ -224,13 +222,52 @@ const CreateEstablishmentForm = ({
             Type of place
             {errorState.type && <span>{errorState.type}</span>}
           </label>
-          <input
-            className={`forms__input ${errorState.type && "forms__input--error"}`}
-            type="text"
-            value={formFields.type}
-            name="type"
-            onChange={handleFormFields}
-          />
+          <div name="type" className="forms__checkbox">
+            <div
+              tabIndex="0"
+              className={`forms__checkbox-button ${formFields.type &&
+                formFields.type.includes("Hotel room") &&
+                "forms__checkbox-button--active"}`}
+              onClick={e => {
+                setFormFields({ ...formFields, type: e.target.innerHTML });
+              }}
+            >
+              Hotel room
+            </div>
+            <div
+              tabIndex="0"
+              className={`forms__checkbox-button ${formFields.type &&
+                formFields.type.includes("Entire place") &&
+                "forms__checkbox-button--active"}`}
+              onClick={e => {
+                setFormFields({ ...formFields, type: e.target.innerHTML });
+              }}
+            >
+              Entire place
+            </div>
+            <div
+              tabIndex="0"
+              className={`forms__checkbox-button ${formFields.type &&
+                formFields.type.includes("Shared room") &&
+                "forms__checkbox-button--active"}`}
+              onClick={e => {
+                setFormFields({ ...formFields, type: e.target.innerHTML });
+              }}
+            >
+              Shared room
+            </div>
+            <div
+              tabIndex="0"
+              className={`forms__checkbox-button ${formFields.type &&
+                formFields.type.includes("Private room") &&
+                "forms__checkbox-button--active"}`}
+              onClick={e => {
+                setFormFields({ ...formFields, type: e.target.innerHTML });
+              }}
+            >
+              Private room
+            </div>
+          </div>
           <label className="forms__label" htmlFor="time">
             Available from / to
             {errorState.availableUntill && <span>{errorState.availableUntill}</span>}

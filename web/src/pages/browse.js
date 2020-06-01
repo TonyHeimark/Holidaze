@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { graphql } from "gatsby";
 import Container from "../components/container";
 import SEO from "../components/seo";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import Layout from "../containers/layout";
-import Filters from "../components/bits/filters";
+import Filters from "../components/filters";
 import EstablishmentListing from "../components/bits/establishmentListing";
 
 import "../styles/layout.scss";

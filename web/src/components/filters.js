@@ -8,10 +8,10 @@ import {
   setSearch,
   setPrice,
   setType
-} from "../../state/filters";
+} from "../state/filters";
 import InputRange from "react-input-range";
 import DatePicker from "react-datepicker";
-import DatepickerInput from "../bits/datePickerInput";
+import DatepickerInput from "./bits/datePickerInput";
 
 const Filters = ({ filterOpen }) => {
   const [today, setToday] = useState(new Date());

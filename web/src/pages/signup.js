@@ -44,7 +44,6 @@ const SignUpPage = () => {
     const errorCheck = Object.keys(errors);
     if (errorCheck.length !== 0) {
       setErrorState(errors);
-      console.log(errors);
       return null;
     }
 

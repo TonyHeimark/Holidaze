@@ -13,9 +13,6 @@
   a {
     color: inherit;
     text-decoration: none;
-    &:hover {
-      color: $color-accent;
-    }
   }
   &__wrapper {
     box-sizing: border-box;

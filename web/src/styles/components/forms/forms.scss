@@ -45,7 +45,7 @@
       span {
         margin: 3px 0 0 -15px;
         font-size: 28px;
-        color: #39393998;
+        color: $color-dark-gray;
         position: absolute;
         left: 50%;
       }
@@ -72,7 +72,7 @@
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
     border: none;
     padding: 10px 15px;
-    color: #393939;
+    color: $color-dark-gray;
     transition: 0.3s;
     border-radius: 10px;
     margin: 0 15px 15px 0;

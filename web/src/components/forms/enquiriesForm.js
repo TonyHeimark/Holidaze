@@ -79,7 +79,7 @@ const EnquiriesForm = ({
     const errorCheck = Object.keys(errors);
     if (errorCheck.length !== 0) {
       setErrorState(errors);
-      console.log(errors);
+
       return null;
     }
 
@@ -108,7 +108,6 @@ const EnquiriesForm = ({
     })
       .then(res => res.json())
       .then(data => {
-        console.log("success response from server...", data);
         setModalContentComponent(<ThankYouModal />);
       })
       .catch(err => {

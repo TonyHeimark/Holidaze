@@ -38,7 +38,6 @@ const ContactForm = () => {
     const errorCheck = Object.keys(errors);
     if (errorCheck.length !== 0) {
       setErrorState(errors);
-      console.log(errors);
       return null;
     }
 
@@ -63,7 +62,6 @@ const ContactForm = () => {
     })
       .then(res => res.json())
       .then(data => {
-        console.log("success response from server...", data);
         setSuccessMessage("Your message was successfully sent, we will get back to you shortly.");
       })
       .catch(err => {

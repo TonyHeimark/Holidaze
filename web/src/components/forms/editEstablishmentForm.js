@@ -108,7 +108,6 @@ const EditEstablishmentForm = ({
     })
       .then(res => res.json())
       .then(data => {
-        console.log("success response from server...", data);
         setModalShow(false);
         const query = `*[_type == "establishments"]`;
         fetchDynamicData(query, setEstablishments);
@@ -141,7 +140,6 @@ const EditEstablishmentForm = ({
       })
         .then(res => res.json())
         .then(imageResult => {
-          console.log("success response from server...", imageResult);
           setInputImage(imageResult.data);
           handleEditEstablishment(imageResult.data);
         })
@@ -181,15 +179,52 @@ const EditEstablishmentForm = ({
             <label className="forms__label" htmlFor="type">
               Type of place
             </label>
-            <input
-              className="forms__input"
-              type="text"
-              value={inputType}
-              name="type"
-              onChange={e => {
-                setInputType(e.target.value);
-              }}
-            />
+            <div name="type" className="forms__checkbox">
+              <div
+                tabIndex="0"
+                className={`forms__checkbox-button ${inputType &&
+                  inputType.includes("Hotel room") &&
+                  "forms__checkbox-button--active"}`}
+                onClick={e => {
+                  setInputType(e.target.innerHTML);
+                }}
+              >
+                Hotel room
+              </div>
+              <div
+                tabIndex="0"
+                className={`forms__checkbox-button ${inputType &&
+                  inputType.includes("Entire place") &&
+                  "forms__checkbox-button--active"}`}
+                onClick={e => {
+                  setInputType(e.target.innerHTML);
+                }}
+              >
+                Entire place
+              </div>
+              <div
+                tabIndex="0"
+                className={`forms__checkbox-button ${inputType &&
+                  inputType.includes("Shared room") &&
+                  "forms__checkbox-button--active"}`}
+                onClick={e => {
+                  setInputType(e.target.innerHTML);
+                }}
+              >
+                Shared room
+              </div>
+              <div
+                tabIndex="0"
+                className={`forms__checkbox-button ${inputType &&
+                  inputType.includes("Private room") &&
+                  "forms__checkbox-button--active"}`}
+                onClick={e => {
+                  setInputType(e.target.innerHTML);
+                }}
+              >
+                Private room
+              </div>
+            </div>
             <label className="forms__label" htmlFor="time">
               Available from / to
             </label>

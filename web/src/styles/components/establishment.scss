@@ -91,7 +91,7 @@
     font-size: 24px;
     span {
       display: block;
-      color: #393939;
+      color: $color-dark-gray;
       font-weight: 400;
     }
   }
@@ -210,7 +210,7 @@
     span {
       text-align: right;
       padding-right: 5px;
-      color: #393939;
+      color: $color-dark-gray;
       font-weight: 600;
       margin-bottom: -5px;
       transition: 0.2s;
