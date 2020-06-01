@@ -8,7 +8,8 @@
     border-radius: 20px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
     margin: 0 0 50px;
-    height: 280px;
+    height: auto;
+    min-height: 280px;
     color: unset;
     transition: 0.3s;
     @media (max-width: 960px) {
@@ -43,7 +44,7 @@
     img {
       object-position: center;
       object-fit: cover;
-      height: 280px;
+      height: 100%;
       width: 100%;
       transition: 0.3s;
       @media (max-width: 960px) {
@@ -70,11 +71,13 @@
   }
 
   &__rating {
+    position: absolute;
     display: block;
     margin: 10px 0 0;
     font-size: 20px;
     font-weight: 600;
     color: $color-primary-green;
+    bottom: 50px;
 
     img {
       margin-right: 10px;
@@ -83,9 +86,11 @@
   }
 
   &__beds {
+    position: absolute;
     display: block;
     font-size: 20px;
     font-weight: 600;
+    bottom: 20px;
 
     img {
       margin-right: 10px;
@@ -108,7 +113,8 @@
   &__meta {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-    margin-top: 32px;
+    justify-content: end;
+    margin-top: 40px;
+    min-height: 50px;
   }
 }

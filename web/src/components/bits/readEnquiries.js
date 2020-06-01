@@ -7,6 +7,7 @@ const ReadEnquiries = ({ enquirie, handleDelete }) => {
 
   return (
     <div className="read-message">
+      <h2 className="read-message__heading">{enquirie.establishmentName}</h2>
       <label className="read-message__label" htmlFor="name">
         Name
       </label>

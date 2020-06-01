@@ -42,8 +42,8 @@ const Widget = ({
                 key={node._id}
                 className="widget__button"
               >
-                {(node.establishmentName || node.name).substr(0, 16)}
-                {node.establishmentName && node.establishmentName.length > 16 && "..."}
+                {(node.establishmentName || node.name).substr(0, 21)}
+                {node.establishmentName && node.establishmentName.length > 21 && "..."}
                 {node.name && node.name.length > 16 && "..."}
                 <img src={rightArrow} alt="message" />{" "}
               </button>

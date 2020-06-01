@@ -44,9 +44,13 @@
 
     p {
       line-height: 32px;
+      padding-bottom: 150px;
     }
 
     @media (max-width: 860px) {
+      p {
+        padding-bottom: 0;
+      }
       max-width: unset;
     }
     @media (max-width: 600px) {
