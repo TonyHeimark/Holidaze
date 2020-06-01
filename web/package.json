@@ -2,7 +2,7 @@
   "private": true,
   "name": "holidaze-web",
   "version": "1.0.0",
-  "author": "Sanity <hello@sanity.io>",
+  "author": "Tony Heimark <tjh-94@hotmail.com>",
   "scripts": {
     "build": "gatsby build",
     "clean-cache": "gatsby clean",
