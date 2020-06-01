@@ -28,10 +28,12 @@ const EditEstablishmentForm = ({
   const [inputRating, setInputRating] = useState(listingToEdit.rating);
   const [inputImage, setInputImage] = useState(listingToEdit.image.asset._ref);
   const [inputFacilities, setInputFacilities] = useState(listingToEdit.facilities);
-  const [facilityKeys, setFacilityKeys] = useState(listingToEdit.facilities.map(f => f._key));
+  const [facilityRefs, setFacilityRefs] = useState(listingToEdit.facilities.map(f => f._ref));
   const [inputDescription, setInputDescription] = useState(listingToEdit.description);
   const [fileState, setFileState] = useState("");
   const [dataState, setDataState] = useState("");
+
+  console.log(listingToEdit.facilities);
 
   const handleFacilitiesArray = facility => {
     const facilitiesInState = inputFacilities;
@@ -49,7 +51,7 @@ const EditEstablishmentForm = ({
         _type: "facilities"
       });
     }
-    setFacilityKeys(facilitiesInState.map(f => f._key));
+    setFacilityRefs(facilitiesInState.map(f => f._ref));
     setInputFacilities(facilitiesInState);
   };
 
@@ -397,7 +399,7 @@ const EditEstablishmentForm = ({
               <div
                 tabIndex="0"
                 key={f.node._id}
-                className={`forms__checkbox-button ${facilityKeys.includes(f.node._id) &&
+                className={`forms__checkbox-button ${facilityRefs.includes(f.node._id) &&
                   "forms__checkbox-button--active"}`}
                 onClick={e => {
                   handleFacilitiesArray(f.node);
