@@ -4,7 +4,7 @@ import { buildImageObj } from "../../lib/helpers";
 import { imageUrlFor } from "../../lib/image-url";
 
 import StarIcon from "../../assets/star-solid.svg";
-import BedIcon from "../../assets/bed-solid.svg";
+import guestIcon from "../../assets/user-solid.svg";
 
 const EstablishmentListing = ({ listing }) => {
   return (
@@ -30,8 +30,8 @@ const EstablishmentListing = ({ listing }) => {
                 {listing.rating}
               </span>
               <span className="establishment-listing__beds">
-                <img src={BedIcon} alt="amount of beds" />
-                {listing.beds}
+                <img src={guestIcon} alt="amount of beds" />
+                {listing.maxGuests}
               </span>
             </div>
 
