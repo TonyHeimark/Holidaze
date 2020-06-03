@@ -10,7 +10,7 @@ const Widget = ({
   setModalShow,
   title,
   message,
-  enquirie,
+  enquiry,
   handleDelete
 }) => {
   return (
@@ -22,7 +22,7 @@ const Widget = ({
             items.map(node => (
               <button
                 onClick={() => {
-                  setModalShow(message || enquirie);
+                  setModalShow(message || enquiry);
                   setModalContentComponent(
                     message ? (
                       <ReadMessage
@@ -30,9 +30,9 @@ const Widget = ({
                         setModalShow={setModalShow}
                         handleDelete={handleDelete}
                       />
-                    ) : enquirie ? (
+                    ) : enquiry ? (
                       <ReadEnquiries
-                        enquirie={node}
+                        enquiry={node}
                         setModalShow={setModalShow}
                         handleDelete={handleDelete}
                       />

@@ -102,7 +102,7 @@ const Dashboard = ({ data }) => {
         if (data.success) {
           setModalShow(false);
 
-          if (type === "enquirie") {
+          if (type === "enquiry") {
             const dataState = enquiries;
             const index = dataState
               .map(item => {
@@ -182,7 +182,7 @@ const Dashboard = ({ data }) => {
                 title="Enquiries"
                 setModalShow={setModalShow}
                 setModalContentComponent={setModalContentComponent}
-                enquirie={true}
+                enquiry={true}
               />
             </div>
           </div>
